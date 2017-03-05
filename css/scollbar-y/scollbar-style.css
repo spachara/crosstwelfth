@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+
+.content-scollbar-y {margin:0 auto; width:100%; height:64px;  overflow:auto; }
+.content-scollbar2-y {margin:0 auto; width:100%; height:80px;  overflow:auto; }
+.content-scollbar-x{width:940px; height:110px; overflow:auto; clear:both; margin:0px;}
+.content-scollbar02-x{width:980px; height:140px; overflow:auto; clear:both; margin:0px;}
+.content-scollbar03-x{width:960px; height:140px; overflow:auto; clear:both; margin:0px;}
+.content-scollbar-y-popup {
+	margin:0 auto;width:800px; height:700px; overflow:auto; display:block; 
+}
+
+.boxComment {
+	margin:0 auto; width:100%; height:400px;  overflow:auto;
+}

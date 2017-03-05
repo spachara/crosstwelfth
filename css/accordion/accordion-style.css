@@ -1,0 +1,24 @@
+
+
+section {
+	display:block;
+}
+.acc {list-style:none; }
+.acc section {padding:0px; margin:0px; cursor:pointer; font-weight:bold; text-align:right; color:#000; font-size:14px; padding:10px 0; }
+.acc section:hover {color:#38af9a;}
+.acc section.head {color:#000;}
+.acc section.selected {color:#38af9a;}
+
+.acc .acc-section {overflow:hidden;}
+.acc .acc-content {padding:10px;}
+
+.nested {width:150px; list-style:none; color:#333;}
+.nested a div {width:150px; padding-left:15px; font-weight:100; margin:0; cursor:pointer; color:#666 !important;}
+.nested a:hover div {background:#ebebeb; color:#000;}
+.nested .acc-section {overflow:hidden; background:#fff}
+.nested .acc-content {padding:0px;}
+.nested .acc-selected {}
+
+
+
+

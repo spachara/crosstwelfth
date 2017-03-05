@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+@charset "utf-8";
+/* CSS Document */
+
+#gallery {
+	overflow:hidden;
+}
+#gallery li {
+
+}
+#full-size {
+	width:280px;
+	height:430px;
+	background-size:contain;
+}

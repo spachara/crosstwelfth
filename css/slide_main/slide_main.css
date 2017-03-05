@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*-----*/
+
+#slideshow {
+
+}
+
+#slideshow a {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    opacity:0.0;
+}
+
+#slideshow a.active {
+    z-index:4;
+    opacity:1.0;
+}
+
+#slideshow a.last-active {
+    z-index:3;
+}
+
+/*-----------*/
+#slideshow2 {
+
+}
+
+#slideshow2 img {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    opacity:0.0;
+}
+
+#slideshow2 img.active2 {
+    z-index:4;
+    opacity:1.0;
+}
+
+#slideshow2 img.last-active2 {
+    z-index:3;
+}
+
+/*-----------*/
+#slideshow3 {
+
+}
+
+#slideshow3 img {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    opacity:0.0;
+}
+
+#slideshow3 img.active3 {
+    z-index:4;
+    opacity:1.0;
+}
+
+#slideshow3 img.last-active3 {
+    z-index:3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

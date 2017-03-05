@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+
+div.head a { 
+color: #000;
+display:block; 
+font-size:14px;
+font-weight:bold;
+text-align:right;
+padding:5px 0;
+	
+}
+div.head a:hover { 
+color: #38af9a;
+}
+div.selected a { 
+color: #38af9a;
+}
+div.selected a:hover { 
+color: #000;
+}

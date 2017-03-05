@@ -1,0 +1,165 @@
+@charset "utf-8";
+/* CSS Document */
+
+.wrapper {
+	width: 100%;
+	margin:0 auto;
+	height:110px;
+}
+.list_carousel {
+	width: 100%;
+	
+	position:relative;
+}
+.list_carousel ul, #foo3 , #foo4 , #foo5  {
+/*	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: block;
+*/	
+
+}
+.list_carousel li {
+	font-size: 40px;
+	color: #999;
+	text-align: center;
+	width: 106px;
+	height: 106px;
+	padding: 0;
+	margin: 0px 6px;
+	display: block;
+	float: left;
+}
+	.list_carousel li img {
+		position:relative; top:2px; left:-1px;
+		height:100px; /*ความสูงของรูปภาพที่แสดงใน Thumb*/
+	}
+.list_carousel.responsive {
+	width: auto;
+	margin-left: 0;
+}
+.clearfix {
+	float: none;
+	clear: both;
+}
+.prev {
+	position:absolute; left:0px; top:60px;
+	width:26px; height:54px;
+	background-image:url(pre.png);
+	background-position:left top;
+	display:block;
+}
+	.prev:hover {
+		background-position:center top; display:block;
+	}
+	.prev:active {
+		background-position:right top; display:block;
+	}			
+.next {
+	position:absolute; right:0px; top:60px;
+	width:26px; height:54px;
+	background-image:url(next.png);
+	background-position:left top;
+	display:block;
+}
+	.next:hover {
+		background-position:center top; display:block;
+	}
+	.next:active {
+		background-position:right top; display:block;
+	}
+	
+.prev2 {
+	position:absolute; left:0px; top:90px;
+	width:26px; height:54px;
+	background-image:url(pre.png);
+	background-position:left top;
+	display:block;
+}
+	.prev2:hover {
+		background-position:center top; display:block;
+	}
+	.prev2:active {
+		background-position:right top; display:block;
+	}			
+.next2 {
+	position:absolute; right:0px; top:90px;
+	width:26px; height:54px;
+	background-image:url(next.png);
+	background-position:left top;
+	display:block;
+}
+	.next2:hover {
+		background-position:center top; display:block;
+	}
+	.next2:active {
+		background-position:right top; display:block;
+	}	
+	
+	
+.prev3 {
+	position:absolute; left:0px; top:20px;
+	width:26px; height:54px;
+	background-image:url(pre.png);
+	background-position:left top;
+	display:block;
+}
+	.prev3:hover {
+		background-position:center top; display:block;
+	}
+	.prev3:active {
+		background-position:right top; display:block;
+	}			
+.next3 {
+	position:absolute; right:0px; top:20px;
+	width:26px; height:54px;
+	background-image:url(next.png);
+	background-position:left top;
+	display:block;
+}
+	.next3:hover {
+		background-position:center top; display:block;
+	}
+	.next3:active {
+		background-position:right top; display:block;
+	}	
+	
+	
+	
+	
+	
+.prev5 {
+	position:absolute; left:-5px; top:0px;
+	width:20px; height:90px;
+	background-image:url(pre2.png);
+	background-position:left top;
+	display:block;
+}		
+.next5 {
+	position:absolute; right:-5px; top:0px;
+	width:20px; height:90px;
+	background-image:url(next2.png);
+	background-position:left top;
+	display:block;
+}
+	
+	
+		
+.pager {
+	float: left;
+	width: 300px;
+	text-align: center;
+}
+.pager a {
+	margin: 0 5px;
+	text-decoration: none;
+}
+.pager a.selected {
+	text-decoration: underline;
+}
+.timer {
+	background-color: #999;
+	height: 6px;
+	width: 0px;
+}
+
