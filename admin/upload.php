@@ -65,10 +65,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 		
 		if(empty($error_mess))
 		{
-			move_uploaded_file($_FILES["fileEXEL"]["tmp_name"],'../file/' . $_FILES["fileEXEL"]["name"]); // Copy/Upload CSV
+			move_uploaded_file($_FILES["fileEXEL"]["tmp_name"],'file/' . $_FILES["fileEXEL"]["name"]); // Copy/Upload CSV
 
 			//header('Content-Type: text/plain');
-			$Filepath = '../file/' . $_FILES["fileEXEL"]["name"];
+			$Filepath = 'file/' . $_FILES["fileEXEL"]["name"];
 	 
 
 		require('spreadsheet-reader/php-excel-reader/excel_reader2.php');
@@ -97,8 +97,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 				$error_mess = 'Insert purchase order fail!!!!!';
 				throw new Exception($error_mess);
 			}
-			$last_id = mysql_insert_id($connect); 
-			$product_query_array=array();
+			$last_id = mysql_insert_id($connect);
 			foreach ($Spreadsheet as $Key => $Row)
 			{
 				if ($Row && $Key > 0)
@@ -121,6 +120,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 					}					
 					else if($num_product==1)
 					{
+				       
 						$row = mysql_fetch_array($product);
 						if( $num > $row['p_spare'] )
 						{
@@ -140,16 +140,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 						$data_uu = @mysql_fetch_array($result_uu);
 						
 						
-						$product_query  = "UPDATE product_tb SET p_spare = '". ((int)$row['p_spare'] - (int)$num) ."'";
-						$product_query .= " where p_code = '".$data_uu['p_code']."' and p_color = '".$data_uu['p_color']."';";
-						
-						array_push($product_query_array,$product_query );
-						/*$s = mysql_query($edit_product2, $connect);
+						$edit_product2 = "UPDATE product_tb SET p_spare = '". ((int)$row['p_spare'] - (int)$num) ."'";
+						$edit_product2 .= " where p_code = '".$data_uu['p_code']."' and p_color = '".$data_uu['p_color']."'";
+						$s = mysql_query($edit_product2, $connect);
 						if(!$s)
 						{
 							$error_mess = 'UPDATE product_tb set p_spare fail!!!!!';
 							throw new Exception($error_mess);
-						}	*/			
+						}				
 						
 						
 						$sql_buy_spare = "SELECT * FROM temp_order_product where pid ='".$row['pid']."'";
@@ -172,15 +170,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 						}						
 						 
 						$total_pre = $row['p_pre']+$num;
-						$product_query  = "UPDATE product_tb SET";
-						$product_query  .= " p_pre = '".$total_pre."' where pid = '".$row['pid']."';";
-						array_push($product_query_array,$product_query );
-						/*$s2 = mysql_query($edit_product4, $connect);
+						$edit_product4 = "UPDATE product_tb SET ";
+						$edit_product4 .= " p_pre = '".$total_pre."' where pid = '".$row['pid']."'";
+						$s2 = mysql_query($edit_product4, $connect);
 						if(!$s2)
 						{
 							$error_mess = 'UPDATE product_tb  set p_pre fail!!!!!';
 							throw new Exception($error_mess);
-						}*/
+						}
 						// update stock end
 						
 					}
@@ -197,14 +194,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 		
 			}
 			
-			foreach ($product_query_array as &$value) {
-				$s2 = mysql_query($value, $connect); 
-				if(!$s2)
-				{
-					$error_mess = 'UPDATE product_tb  fail!!!!!';
-					throw new Exception($error_mess);
-				}
-			}
 			mysql_query("COMMIT",$connect);	
 			mysql_close($connect);
 			header("Location: receive_product.php?purchase_order_no=" . $om_no); /* Redirect browser */
@@ -217,7 +206,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['btnSubmit'] == 'Submit' ){
 		}
 
 		mysql_query('SET AUTOCOMMIT=1');
-		@unlink('../file/' . $_FILES["fileEXEL"]["name"]);
+		@unlink('file/' . $_FILES["fileEXEL"]["name"]);
 		mysql_close($connect);
 
 	}
