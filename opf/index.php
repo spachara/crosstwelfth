@@ -137,10 +137,12 @@ if($_POST['order_number_real']){
 			"ที่อยู่ : ".$_POST['contact_address']."<br>".
 			"จังหวัด : ".$_POST['contact_province']."<br>".
 			"รหัสไปรษณีย์ : ".$_POST['contact_zipcode']."<br>".
-			"เบอร์โทรศัพท์ : ".$_POST['contact_tel']."<br>".
-			"อีเมล์ : ".$_POST['cus_email']."<br><br>";
-			
-				$sql_update = "UPDATE order_tb SET payment_status = '1', order_status = '5', order_address1 = '" . $address1 . "' , order_address2 = '" . $address1 . "' , order_employee ='" . $_POST['contact_name']." ".$_POST['contact_surname'] . "' where order_number = '".$_POST['order_number_real']."'"  ;
+			"เบอร์โทรศัพท์ : ".$_POST['contact_tel']."<br>";
+			if(isset($_POST['contact_email']) && $_POST['contact_email'] != '')
+			{
+				$address1 .= "อีเมล์ : ".$_POST['contact_email']."<br><br>";
+			}
+				$sql_update = "UPDATE order_tb SET payment_status = '1', order_status = '5', order_address1 = '" . $address1 . "' , order_address2 = '" . $address1 . "' , order_employee ='" . $_POST['contact_name']." ".$_POST['contact_surname'] . "' , order_email= '" . $_POST['contact_email'] . "' where order_number = '".$_POST['order_number_real']."'"  ;
 				$result_update = @mysql_query($sql_update, $connect);
  
 	
@@ -492,6 +494,13 @@ if($_POST['order_number_real']){
                                     <label>รหัสไปรษณีย์*</label>
                                     <h6>
                                     <input name="contact_zipcode" id="contact_zipcode" class="validate[required]" type="text" value=""/>
+                                    </h6>
+                                	<div class="clear"></div>
+                                </li>
+								<li>
+                                    <label>E-mail</label>
+                                    <h6>
+                                    <input name="contact_email" id="contact_email"  type="text" value=""/>
                                     </h6>
                                 	<div class="clear"></div>
                                 </li>
