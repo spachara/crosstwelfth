@@ -289,7 +289,7 @@ if (strcmp($script_tz, ini_get('date.timezone'))){
                                 </article>
                                 <article class="detailSearch">
 								<?php
-                                $sql_chkColor = "SELECT * FROM color_tb where ranking not in('0','') GROUP BY name ORDER BY ranking ";
+                                $sql_chkColor = "SELECT * FROM color_tb where ranking not in('0','') GROUP BY name ORDER BY name ";
                                 $result_chkColor = @mysql_query($sql_chkColor, $connect);
                                 $num_chkColor = @mysql_num_rows($result_chkColor);
                                 
