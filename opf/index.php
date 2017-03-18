@@ -142,7 +142,7 @@ if($_POST['order_number_real']){
 			{
 				$address1 .= "อีเมล์ : ".$_POST['contact_email']."<br><br>";
 			}
-				$sql_update = "UPDATE order_tb SET payment_status = '1', order_status = '5', order_address1 = '" . $address1 . "' , order_address2 = '" . $address1 . "' , order_employee ='" . $_POST['contact_name']." ".$_POST['contact_surname'] . "' , order_email= '" . $_POST['contact_email'] . "' where order_number = '".$_POST['order_number_real']."'"  ;
+				$sql_update = "UPDATE order_tb SET payment_status = '1', order_status = '5', order_address1 = '" . mysql_real_escape_string($address1) . "' , order_address2 = '" . mysql_real_escape_string($address1) . "' , order_employee ='" . mysql_real_escape_string($_POST['contact_name'])." ".mysql_real_escape_string($_POST['contact_surname']) . "' , order_email= '" . mysql_real_escape_string($_POST['contact_email']) . "' where order_number = '".$_POST['order_number_real']."'"  ;
 				$result_update = @mysql_query($sql_update, $connect);
  
 	
