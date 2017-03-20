@@ -462,9 +462,12 @@ $(document).ready(function() {
                                                                 
                                                      
 
-                            $val_order1 = $data_order['order_number'] . '-IN';
+                           $val_order1 = $data_order['order_number'] . '-IN';
                             $val_order2 = $data_order['order_count'] > 1 ? $data_order['order_number'] . '-PRE' : '';
-                            $order_concate = explode(',',$data_order['order_concate']);
+                            $order_concate = explode(',',$data_order['order_concate']);          
+							if ($data_order['order_count'] == 1 && strpos($order_concate[0], 'PRE') !== false) {
+								 $val_order1 = $data_order['order_number'] . '-PRE';
+							}
                           ?>
                           <a href="<?php echo $url_pic;?>/tmp/<?php echo $val_order1;?>.pdf" target="_blank"><?php echo $order_concate[0];?></a>
                           <?php if($val_order2 != '' ){?>
