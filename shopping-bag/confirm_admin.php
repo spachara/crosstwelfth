@@ -16,7 +16,7 @@ $_SESSION['session_PointDis'] = $_POST['PointDis'];
 $_SESSION['session_PromotionDis'] = $_POST['PromotionDis'];
 $_SESSION['session_CodeDisHidden'] = $_POST['CodeDisHidden'];
 $_SESSION['session_CostCal'] = $_POST['CostCal'];
-$_SESSION['cus_phone'] = $_POST['contact_phone'];
+$_SESSION['cus_phone'] = str_replace(" ", "",$_POST['contact_phone']);
 
 
 function getToken(){
