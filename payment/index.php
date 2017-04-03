@@ -174,6 +174,10 @@ $(document).ready(function() {
 
 if($_POST['total_price'] != '' ){
 
+if (!isset($_SESSION['AUTH_PERMISSION_MEMID'])) {
+   echo "<script>location.href='../register/login.php'</script>";
+}
+
 if($_POST['order_number']){
 
 
