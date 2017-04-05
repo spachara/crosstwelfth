@@ -183,7 +183,8 @@ if($_GET['del'] != '' ){
 		
 		$edit_order = "UPDATE order_tb SET order_status = '0' WHERE order_number = '".$_GET['del']."' ";
 		@mysql_query($edit_order, $connect);
-		
+		$edit_order = "UPDATE order_product_tb SET tracking_number = '' WHERE order_number = '".$_GET['del']."' ";
+		@mysql_query($edit_order, $connect);
 					$messages = "เรียนคุณ ".$data_user['u_fname']."<br><br>";
 					
 					$messages .= 'อีเมลล์นี้เป็นการยืนยันว่าทางเราได้รับการยกเลิกออร์เดอร์ เลขที่ '.'"'.$_GET['val_order'].'" ของท่านแล้ว<br>';
