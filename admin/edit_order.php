@@ -174,8 +174,9 @@ if($_POST['CANCEL'] == 'Cancel'){
 		}
 		
 		
-		
-					$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL' WHERE order_number = '".$_POST['order_number']."' ";
+		if(intval($num_temp) >0 )
+		{
+					$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = 'Cancel by " .$_SESSION['AUTH_PERMISSION_ID']. "' WHERE order_number = '".$_POST['order_number']."' ";
 					@mysql_query($edit_order, $connect);
 					$edit_order = "UPDATE order_product_tb SET tracking_number = '' WHERE order_number = '".$_POST['order_number']."' ";
 					@mysql_query($edit_order, $connect);
@@ -224,8 +225,190 @@ if($_POST['CANCEL'] == 'Cancel'){
 					<?php
 	
 					}
-}
+		}
+} 
+if($_POST['CANCELPerItem'] == 'Delete' && isset($_POST['chkDelete']))
+{
+		$strproid= ' ';
+		foreach ($_POST['chkDelete'] as $proid) {
+		$strproid .=   $proid . ',';
+			
+		}
+		$strproid= rtrim($strproid, ',');
+		$sql_tmp = "SELECT * FROM temp_order_product WHERE order_number = '".$_POST['order_number']."' and pid in(" . $strproid . ")";
+	 
+		$result_tmp = @mysql_query($sql_tmp, $connect);
+		$num_temp = @mysql_num_rows($result_tmp);
+	
+		if(intval($num_temp) ==0 )
+		{$strproid='0';}
+			 
+		for($t=1;$t<=intval($num_temp);$t++){
+		$data_tmp = @mysql_fetch_array($result_tmp);
+		
+				$numbacktostock = 0;
+				if($data_tmp['buy_status'] == 'INSTOCK' && $data_tmp['sent_status'] == 'READY'){
+					$numbacktostock =  $data_tmp['product_number'];
+					 
+				}elseif($data_tmp['buy_status'] == 'PREORDER' && $data_tmp['sent_status'] == 'READY'){
+					
+					$numbacktostock =  $data_tmp['product_number'];
 
+				}elseif($data_tmp['buy_status'] == 'PREORDER' && $data_tmp['sent_status'] == 'RESERVE'){
+					
+					$pro_num = $data_tmp['product_number'] -  $data_tmp['product_recive'];
+					if($pro_num > 0)
+					{
+						$update_product = "UPDATE product_tb SET p_pre = p_pre+".$pro_num." WHERE pid = '".$data_tmp['pid']."' ";
+						@mysql_query($update_product, $connect);
+					}
+					 if($data_tmp['product_recive'] > 0)
+					{
+						$numbacktostock =  $data_tmp['product_recive'];
+					}
+
+				}elseif($data_tmp['buy_status'] == 'SPARE' && $data_tmp['sent_status'] == 'RESERVE'){
+					
+					$sql_product = "select * from product_tb WHERE pid = '".$data_tmp['pid']."' ";
+					$result_pro = @mysql_query($sql_product, $connect);
+					$data_pro =@mysql_fetch_array($result_pro);
+					$pro_code =  $data_pro['p_code'];
+					$pro_color =  $data_pro['p_color'];
+					$pro_num = $data_tmp['product_number'] -  $data_tmp['product_recive'];
+					if($pro_num > 0)
+					{
+					$update_product = "UPDATE product_tb SET p_spare = p_spare+".$pro_num." WHERE p_code = '".$pro_code."' and p_color = '" . $pro_color . "'";
+					@mysql_query($update_product, $connect);
+					}
+					 if($data_tmp['product_recive'] > 0)
+					{
+						$numbacktostock =  $data_tmp['product_recive'];
+					}
+
+				}elseif($data_tmp['buy_status'] == 'SPARE' && $data_tmp['sent_status'] == 'READY'){
+					
+					$numbacktostock =  $data_tmp['product_number'];
+
+				}
+				
+				$real_recive = $numbacktostock;
+						if($real_recive > 0)
+						{
+							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."'";
+							$sql_reserve .= " AND sent_status = 'RESERVE' order by date_in asc";
+							$result_reserve =@mysql_query($sql_reserve, $connect);
+							
+							$num_reserve =@mysql_num_rows($result_reserve);
+							
+							
+							
+							for($r=1;$r<=intval($num_reserve);$r++){
+							
+								$data_reserve =@mysql_fetch_array($result_reserve);
+								
+								if($real_recive != '' and $real_recive > 0 ){
+									
+									$real_recive = $real_recive - $data_reserve['product_number']+$data_reserve['product_recive'];
+									
+									if($real_recive > 0){
+										
+										 $update_num = $data_reserve['product_number'];
+										 $update_status = "READY";
+										
+									}else{
+									$update_num = $data_reserve['product_number'] + $real_recive;
+										if($update_num > 0){
+												
+										 $update_num = $update_num;
+										 
+										 if($update_num == $data_reserve['product_number']){
+										 $update_status = "READY";
+										 }else{
+										 $update_status = "RESERVE";
+										 }
+										 
+										 
+										}else{
+										 $update_num =0;
+										 $update_status = "RESERVE";
+										}
+									}
+									
+									$update_product_number = "UPDATE temp_order_product SET product_recive = '".$update_num."', sent_status = '".$update_status."'";
+									$update_product_number .= " where temp_id = '".$data_reserve['temp_id']."'";
+									$result_product_number =@mysql_query($update_product_number, $connect);	
+								}
+							
+							
+							
+							}
+							if($real_recive > 0)
+							{
+								$update_product = "UPDATE product_tb SET p_stock = p_stock+".$real_recive." WHERE pid = '".$data_tmp['pid']."' ";
+								@mysql_query($update_product, $connect);
+							}
+						}
+			$update_order_product = "UPDATE order_product_tb SET order_number=CONCAT(order_number, '_Deleted') , ready_time=NULL, status_tracking = '-1', date_update=NOW(),round_comment = 'Cancel by " .$_SESSION['AUTH_PERMISSION_ID']. "'  WHERE pro_id = '".$data_tmp['pid']."' and order_number = '".$data_tmp['order_number']."'";
+			@mysql_query($update_order_product, $connect);
+			$sql_delete_detail = "DELETE FROM temp_order_product WHERE temp_id = '".$data_tmp['temp_id']."' and pid ='".$data_tmp['pid']."'";
+			@mysql_query($sql_delete_detail, $connect);
+		
+		}
+	 
+		if($strproid!='0')
+		{
+			$sumDeleteTotal_in = 0;
+			$sumDeleteTotal_pre = 0;
+			$sql_tmp = "SELECT SUM(order_p_total) AS value_sum_in FROM  order_product_tb WHERE order_number like '".$_POST['order_number']."%' and order_type = 'IN' and pro_id in(" . $strproid . ")";
+			$result_tmp = @mysql_query($sql_tmp, $connect);
+			$num_temp = @mysql_num_rows($result_tmp);
+			for($t=1;$t<=intval($num_temp);$t++){
+				$data_tmp =@mysql_fetch_array($result_tmp);
+				$sumDeleteTotal_in+= $data_tmp['value_sum_in'];
+			}
+			$sql_tmp = "SELECT SUM(order_p_total) AS value_sum_pre FROM  order_product_tb WHERE order_number like '".$_POST['order_number']."%' and order_type = 'PRE' and pro_id in(" . $strproid . ")";
+			$result_tmp = @mysql_query($sql_tmp, $connect);
+			$num_temp = @mysql_num_rows($result_tmp);
+			for($t=1;$t<=intval($num_temp);$t++){
+				$data_tmp =@mysql_fetch_array($result_tmp);
+				$sumDeleteTotal_pre+= $data_tmp['value_sum_pre']; 
+			}
+			
+			$sql_tmp1 = "SELECT 1 FROM order_product_tb WHERE order_number like '".$_POST['order_number']."%'  and status_tracking <> '-1'";
+				
+			$result_tmp1 = @mysql_query($sql_tmp1, $connect); 
+			if (@mysql_num_rows($result_tmp1)==0)
+			{ 
+				$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = 'Cancel by " .$_SESSION['AUTH_PERMISSION_ID']. "' WHERE order_number = '".$_POST['order_number']."' ";
+				@mysql_query($edit_order, $connect);
+		
+			}	
+			else
+			{
+				$sql_tmp1 = "SELECT 1 FROM order_product_tb WHERE order_number like '".$_POST['order_number']."%' and tracking_number ='' and status_tracking <> '-1'";
+				$result_tmp1 = @mysql_query($sql_tmp1, $connect); 
+				if (@mysql_num_rows($result_tmp1)==0)
+				{ 
+				$sql_update_done = "UPDATE order_tb SET status_ready = '1',ems_date = '".date('d')."/".date('m')."/".date('Y')."',status_finish = '1', order_status ='3'";
+				$sql_update_done .= " where order_number = '".$_POST['order_number']."'";	
+				@mysql_query($sql_update_done, $connect);
+				}	
+			}
+				
+			if($sumDeleteTotal_in > 0)
+			{
+				$sql_update_done = "UPDATE order_tb SET order_total = order_total- " .$sumDeleteTotal_in ;
+				$sql_update_done .= " where order_number = '".$_POST['order_number']."' and order_type = 'IN'";	
+				@mysql_query($sql_update_done, $connect);
+			}
+			if($sumDeleteTotal_pre > 0)
+			{
+				$sql_update_done = "UPDATE order_tb SET order_total = order_total- " .$sumDeleteTotal_pre ;
+				$sql_update_done .= " where order_number = '".$_POST['order_number']."' and order_type = 'PRE'";
+				@mysql_query($sql_update_done, $connect);			
+			}
+		 }
+}
 
 	$sql_order = "SELECT * FROM order_tb WHERE order_number = '".$_GET['n']."' ";
 	$result_order =@mysql_query($sql_order, $connect);
@@ -504,6 +687,7 @@ function number_only()
             </hgroup>        
                 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
                     	<tr class="titleTable_order">
+                    	    <td width="100" align="center" valign="middle" style="border-left:#ebebeb 1px solid;"></td>
                         	<td align="center" valign="middle"><p>Buying Item</p><span>รายการที่ซื้อ</span></td>
                         	<td width="150" align="center" valign="middle">Tracking No.<br />เลขที่ส่งของ</td>
                         	<td width="100" align="center" valign="middle"><p>Amount</p><span>จำนวน</span></td>
@@ -512,21 +696,37 @@ function number_only()
                        	</tr>
 						<?php
 
-						   $sql_insert_product = "select * from order_product_tb where order_number = '".$data_order4['order_number']."' and order_type = '".$data_order4['order_type']."'";
+						   $sql_insert_product = "select * from order_product_tb where order_number like '".$data_order4['order_number']."%' and order_type = '".$data_order4['order_type']."'";
 						   $result_insert_product = @mysql_query($sql_insert_product, $connect);
 						   $num_product = @mysql_num_rows($result_insert_product);
-						   
+						   $grand_total = 0 ;
 						   for($p=1;$p<=intval($num_product);$p++){
 						   $data_order_product = @mysql_fetch_array($result_insert_product);
-						   
-						   $grand_total = $grand_total + ($data_order_product['order_p_price']*$data_order_product['order_p_stock']);
-						   
+						    if($data_order_product['status_tracking'] <> '-1')
+							{
+								$grand_total = $grand_total + ($data_order_product['order_p_price']*$data_order_product['order_p_stock']);
+							}
 						   $trancking_date = "";
 							if ($data_order_product['trancking_date'] != "") {
 						  	 $trancking_date = substr($data_order_product['trancking_date'], 8 , 2)."/".substr($data_order_product['trancking_date'], 5, 2)."/".substr($data_order_product['trancking_date'], 0, 4);
 							}
                         ?>
                         <tr>
+							<td align="center" valign="middle">
+							<?php
+							 if($data_order_product['status_tracking'] == '-1')
+							{
+									echo '<span style="color:red">Cancel/ยกเลิก</span>';
+							}
+							else if((!isset($data_order_product['tracking_number']) || trim($data_order_product['tracking_number'])==='') && $data_order4['order_status'] != '0')
+							{								
+							?>
+							<input  type="checkbox" class="checkbox1" name="chkDelete[<?php echo $data_order_product['order_p_id'];?>]" value="<?php echo $data_order_product['pro_id'];?>" /> 
+							
+							<?php							
+							}
+							?>
+							</td>
                         	<td align="center" valign="middle">
                         	  <strong><img alt="" title="" src="../images/products/<?php echo $data_order_product['pro_code'];?>/<?php echo $data_order_product['order_p_color'];?>/s.jpg" height="100" /><br />
                        	      #CODE :<?php echo $data_order_product['pro_code'];?> 
@@ -548,7 +748,7 @@ function number_only()
                             	<strong><?php echo number_format($data_order_product['order_p_price']);?></strong>
                             </td>
                             <td align="center" valign="middle">
-                            <strong><?php echo $data_order_product['order_p_stock'] * $data_order_product['order_p_price'];?></strong>
+                            <strong><?php echo $data_order_product['status_tracking'] == '-1' ? 0 :$data_order_product['order_p_stock'] * $data_order_product['order_p_price'];?></strong>
                             </td>
                         </tr>
 						<?php }  ?>
@@ -573,7 +773,8 @@ function number_only()
             </hgroup>        
                     <table width="100%" border="0" cellpadding="0" cellspacing="0" >
                     	<tr class="titleTable_order">
-                    	  <td align="center" valign="middle" style="border-left:#ebebeb 1px solid;"><p>Buying Item</p><span>รายการที่ซื้อ</span></td>
+                    	  <td width="100" align="center" valign="middle" style="border-left:#ebebeb 1px solid;"></td>
+                    	  <td align="center" valign="middle" ><p>Buying Item</p><span>รายการที่ซื้อ</span></td>
                     	  <td width="150" align="center" valign="middle">Tracking No.<br />เลขที่ส่งของ</td>
                        	  <td width="100" align="center" valign="middle"><p>Amount</p><span>จำนวน</span></td>
                           <td width="150" align="center" valign="middle" ><p>Price/Unit</p><span>ราคาต่อหน่วย</span></td>
@@ -581,21 +782,37 @@ function number_only()
                         </tr>
 						<?php
 
-						   $sql_insert_product2 = "select * from order_product_tb where order_number = '".$data_order4['order_number']."' and order_type = '".$data_order4['order_type']."'";
+						   $sql_insert_product2 = "select * from order_product_tb where order_number like '".$data_order4['order_number']."%' and order_type = '".$data_order4['order_type']."'";
 						   $result_insert_product2 = @mysql_query($sql_insert_product2, $connect);
 						   $num_product2 = @mysql_num_rows($result_insert_product2);
-						   
+						   $grand_total2 =0;
 						   for($p2=1;$p2<=intval($num_product2);$p2++){
 						   $data_order_product2 = @mysql_fetch_array($result_insert_product2);
-						   
-						   $grand_total2 = $grand_total2 + ($data_order_product2['order_p_price']*$data_order_product2['order_p_stock']);
-
+						   if($data_order_product2['status_tracking'] <> '-1')
+							{
+								$grand_total2 = $grand_total2 + ($data_order_product2['order_p_price']*$data_order_product2['order_p_stock']);
+							}
 						   $trancking_date2 = "";						   
 						   if ($data_order_product2['trancking_date'] != "") {
 						  		 $trancking_date2 = substr($data_order_product2['trancking_date'], 8 , 2)."/".substr($data_order_product2['trancking_date'], 5, 2)."/".substr($data_order_product2['trancking_date'], 0, 4);
 							}
                         ?>
                         <tr>
+							<td align="center" valign="middle">
+							<?php
+							 if($data_order_product2['status_tracking'] == '-1')
+							{
+									echo '<span style="color:red">Cancel/ยกเลิก</span>';
+							}
+							else if((!isset($data_order_product2['tracking_number']) || trim($data_order_product2['tracking_number'])==='') && $data_order4['order_status'] != '0')
+							{								
+							?>
+							<input  type="checkbox" class="checkbox1" name="chkDelete[<?php echo $data_order_product2['order_p_id'];?>]" value="<?php echo $data_order_product2['pro_id'];?>" /> 
+							
+							<?php							
+							}
+							?>
+							</td>
                     	  <td align="center" valign="middle" style="border-left:#ebebeb 1px solid;">
                     	    <strong><img alt="" title="" src="../images/products/<?php echo $data_order_product2['pro_code'];?>/<?php echo $data_order_product2['order_p_color'];?>/s.jpg" height="100" /><br />
                	          #CODE :<?php echo $data_order_product2['pro_code'];?> #SIZE : <?php echo $data_order_product2['order_p_size'];?> <?php echo $data_order_product2['order_p_name'];?></strong></td>
@@ -607,7 +824,7 @@ function number_only()
                             	<strong><?php echo number_format($data_order_product2['order_p_price']);?></strong>
                             </td>
                             <td align="center" valign="middle">
-							<strong><?php echo $data_order_product2['order_p_stock'] * $data_order_product2['order_p_price'];?></strong>
+							<strong><?php echo $data_order_product2['status_tracking'] == '-1' ? 0 :$data_order_product2['order_p_stock'] * $data_order_product2['order_p_price'];?></strong>
                             </td>
                         </tr>
 						<?php }  ?>
@@ -830,12 +1047,10 @@ function number_only()
 				<?php echo ($data_order['order_status']== '4' || $data_order['order_status']== '0' ? "disabled=disabled" : '' );?> />-->
 				<input type="hidden" name="val_number" value="<?php echo $val_order;?>" />
                 
-                <?php if($_SESSION['AUTH_PERMISSION_ID'] == '1' || $_SESSION['AUTH_PERMISSION_ID'] == '5' || $_SESSION['AUTH_PERMISSION_TYPE'] =='1'){?>
+                <?php if($_SESSION['AUTH_PERMISSION_ID'] == '1' || $_SESSION['AUTH_PERMISSION_TYPE'] =='1'){?>
                 <input name="CANCEL" type="submit" class="borderfrom" value="Cancel" style="width:110px" onClick="return confirm('คุณต้องการยกเลิกใบสั่งซื้อนี้ ?');">
-                <?php }else{ ?>
-                <input name="CANCEL" type="submit" class="borderfrom" value="Cancel" style="width:110px"
-                <?php echo $data_order['order_status'] > '1' || $data_order['order_status'] == '0' ? "disabled=disabled" : "" ;?> onClick="return confirm('คุณต้องการยกเลิกใบสั่งซื้อนี้ ?');">
-                <?php } ?>
+                <input name="CANCELPerItem" type="submit" class="borderfrom" value="Delete" style="width:110px" onClick="return confirm('คุณต้องการลบนี้ ?');">
+                <?php }  ?> 
                                 
                 </div><br />                               
                
