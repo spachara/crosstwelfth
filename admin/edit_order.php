@@ -1047,8 +1047,10 @@ function number_only()
 				<?php echo ($data_order['order_status']== '4' || $data_order['order_status']== '0' ? "disabled=disabled" : '' );?> />-->
 				<input type="hidden" name="val_number" value="<?php echo $val_order;?>" />
                 
-                <?php if($_SESSION['AUTH_PERMISSION_ID'] == '1' || $_SESSION['AUTH_PERMISSION_TYPE'] =='1'){?>
+                <?php if($_SESSION['AUTH_PERMISSION_ID'] == '1' || $_SESSION['AUTH_PERMISSION_TYPE'] =='1' || $data_order['payment_status']  == '0'){?>
                 <input name="CANCEL" type="submit" class="borderfrom" value="Cancel" style="width:110px" onClick="return confirm('คุณต้องการยกเลิกใบสั่งซื้อนี้ ?');">
+                <?php }  ?> 
+				<?php if($_SESSION['AUTH_PERMISSION_ID'] == '1' || $_SESSION['AUTH_PERMISSION_TYPE'] =='1'){?>
                 <input name="CANCELPerItem" type="submit" class="borderfrom" value="Delete" style="width:110px" onClick="return confirm('คุณต้องการลบนี้ ?');">
                 <?php }  ?> 
                                 

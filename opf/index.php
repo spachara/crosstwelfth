@@ -315,7 +315,7 @@ if($_POST['order_number_real']){
 <br>
 						<p>เลขพัสดุ ที่ขึ้นต้นด้วย RMA  SUK  จัดส่งโดย Kerry Express เช็คสถานะได้ที่ <a style="color:blue" target="_blank" href="https://th.kerryexpress.com/en/track/">https://th.kerryexpress.com/en/track/</a></p>
 <br>
-					<p>เลขพัสดุ  ตัวเลข 6 หลัก  จัดส่งโดย Alpha Fast   เช็คสถานะได้ที่ <a style="color:blue" target="_blank" href="http://www.alphafast.com/th/track">http://www.alphafast.com/th/track</a> </p>
+					<p>เลขพัสดุ  ตัวเลข 6 หรือ 7 หลัก  จัดส่งโดย Alpha Fast   เช็คสถานะได้ที่ <a style="color:blue" target="_blank" href="http://www.alphafast.com/th/track">http://www.alphafast.com/th/track</a> </p>
 
 <br>
 				<p>เลขพัสดุที่ขึ้นต้น  RE  RI จัดส่งโดยไปรษณีย์ไทย  เช็คสถานะ ได้ที่  <a style="color:blue" target="_blank" href="http://track.thailandpost.com/tracking/default.aspx">http://track.thailandpost.com/tracking/default.aspx</a></p>
