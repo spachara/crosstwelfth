@@ -926,12 +926,12 @@ function number_only()
                    $result_order_address = @mysql_query($sql_order_address, $connect);
                    $data_order_address = @mysql_fetch_array($result_order_address);
 				   
-					$GTotal =  $data_order_address['total_order'] + $data_order_address['sum_tran'] ;
+					$GTotal =  $data_order_address['total_order']  ;
 					
 					if($data_order_address['order_promotion'] != '' ){
 					$GTotal =  $GTotal - ($GTotal * ($data_order_address['order_promotion']/100));
 					}
-					
+					$GTotal =  $GTotal + $data_order_address['sum_tran'] ;
 					if($data_order_address['order_point'] != '' ){
 					$GTotal =  $GTotal - $data_order_address['order_point'];
 					}

@@ -236,11 +236,12 @@ if($_POST['order_number_real']){
 										$data_order4 =@mysql_fetch_array($result_order4);
 										$total_order_show =  $data_order['order_total'];
 										
-										$total_order_show =  $data_order4['total_order'] + $data_order4['sum_tran'];
+										$total_order_show =  $data_order4['total_order'];
 										
 										if($data_order4['order_promotion'] != '' ){
 										$total_order_show =  $total_order_show - ($total_order_show * ($data_order4['order_promotion']/100));
 										}
+										$total_order_show =  $total_order_show + $data_order4['sum_tran'];
 										
 										if($data_order4['order_point'] != '' ){
 										$total_order_show =  $total_order_show - $data_order4['order_point'];
