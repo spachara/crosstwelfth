@@ -37,11 +37,12 @@ table, td, th {
                                            <td width="11%" bgcolor="#CCCCCC"><strong>รวมสินค้า<br />
 ทั้งหมด</strong></td>
                                            <td width="11%" bgcolor="#CCCCCC"><strong>Import</strong></td>
+										    <td width="11%" bgcolor="#CCCCCC"><strong>Ranking</strong></td>
                                          </tr>
                                          <?php
 										 
 
-										$sql_product = "SELECT p_category,p_code,p_color,p_size,p_stock,pid,p_pre,p_spare,p_stock,date_in FROM product_tb where ranking <> 0 order by pid desc";
+										$sql_product = "SELECT p_category,p_code,p_color,p_size,p_stock,pid,p_pre,p_spare,p_stock,date_in,ranking FROM product_tb where ranking <> 0 or p_stock > 0 or p_pre > 0 or p_spare > 0 order by ranking, pid desc";
 										$result_product =@mysql_query($sql_product, $connect);
 										$num_product =@mysql_num_rows($result_product);
 										
@@ -195,6 +196,8 @@ table, td, th {
 											<?php echo $total_all + $data_product['p_stock']; ?>                                           
                                            </td>
                                            <td ><?php echo $data_product['date_in'];?></td>
+                                           <td ><?php echo $data_product['ranking'];?></td>
+										   
   </tr>
                                          <? } ?>
                                        </table>

@@ -28,7 +28,7 @@
 			$edit_product .= " , thigh = '".$_POST['thigh']."' , armlength = '".$_POST['armlength']."'";
 			$edit_product .= " , set_waist = '".$_POST['set_waist']."', set_hip = '".$_POST['set_hip']."', set_length = '".$_POST['set_length']."'";
 			$edit_product .= " , set_waist_skirts = '".$_POST['set_waist_skirts']."', set_hip_skirts = '".$_POST['set_hip_skirts']."'";
-			$edit_product .= " , set_length_skirts = '".$_POST['set_length_skirts']."' WHERE pid = '".$_POST['pid']."' ";
+			$edit_product .= " , set_length_skirts = '".$_POST['set_length_skirts']."', ranking = '" . $_POST['ranking']. "'" . " WHERE pid = '".$_POST['pid']."' ";
 			@mysql_query($edit_product, $connect);
 			//echo $edit_product."<br>";
 			
@@ -51,6 +51,12 @@
                             @mysql_query($edit_product3, $connect);
                         }
 						
+						
+						if (isset($_POST['chk_ranking']) && isset($_POST['ranking']) ) {
+                            $edit_product3 = "UPDATE product_tb SET ranking = '".$_POST['ranking']."'";
+                            $edit_product3 .= "where p_code = '".$_POST['p_code']."'";
+                            @mysql_query($edit_product3, $connect);
+                        }
 						
 																											
 				
@@ -240,6 +246,12 @@ function chk_length(){
                                                 </div>
                                             </li>
                                             <?php }?>
+                                            <li>
+                                            	<div class="cell3-text">Ranking :</div>
+                                                <div class="cell3-input"><input name="ranking" type="text" id="ranking" value="<?php echo $data_product['ranking'];?>"/>
+                                                &nbsp; <input type="checkbox" name="chk_ranking" value="1" id="chk_ranking"/>Apply all <?php echo $data_product['p_code'];?> products.
+                                                </div>
+                                            </li>
                                             <li>
                                             	<div class="cell3-text">Clearance Price :</div>
                                                 <div class="cell3-input"><input name="p_clearance" type="text" id="p_clearance" value="<?php echo $data_product['p_clearance'];?>"/></div>

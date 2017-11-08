@@ -559,6 +559,18 @@ function processPopupLink2(){
                                             $result_buy_spare1 =@mysql_query($sql_buy_spare1, $connect);
                                             $data_buy_spare1 =@mysql_fetch_array($result_buy_spare1);
 											
+											 $sql_buy_preorder1 = "SELECT sum(product_recive) as count_revPreorder2 FROM temp_order_product";
+											$sql_buy_preorder1 .= " where pid ='".$data_product['pid']."'";
+                                            $sql_buy_preorder1 .= " AND buy_status = 'PREORDER' AND sent_status = 'RESERVE' AND product_recive< product_number";
+                                            $result_buy_preorder1 =@mysql_query($sql_buy_preorder1, $connect);
+                                            $data_buy_preorder2 =@mysql_fetch_array($result_buy_preorder1);
+
+                                            $sql_buy_spare1 = "SELECT sum(product_recive) as count_revSpare2 FROM temp_order_product";
+											$sql_buy_spare1 .= " where pid ='".$data_product['pid']."'";
+                                            $sql_buy_spare1 .= " AND buy_status = 'SPARE' AND sent_status = 'RESERVE' AND product_recive< product_number";
+                                            $result_buy_spare1 =@mysql_query($sql_buy_spare1, $connect);
+                                            $data_buy_spare2 =@mysql_fetch_array($result_buy_spare1);
+											
 											//echo $data_buy_spare1['count_revSpare'];
 											
 											$productPre_on_hand2 = 0;
@@ -578,7 +590,7 @@ function processPopupLink2(){
 
 											}
 											
-											$productPre_on_hand2 = ($data_buy_preorder1['count_revPreorder']- $productPre_send2)+$data_buy_spare1['count_revSpare'];
+											$productPre_on_hand2 = ($data_buy_preorder1['count_revPreorder']- $productPre_send2)+$data_buy_spare1['count_revSpare'] +$data_buy_spare2['count_revSpare2'] + $data_buy_preorder2['count_revPreorder2'];
 											
 											
 											
@@ -665,7 +677,7 @@ function processPopupLink2(){
 													$product_on_hand = ($product_stock + $product_temp_stock + $product_temp_stock_pre + $product_temp_stock_spare) - $product_send;
 
 												
-												echo $product_on_hand;
+												echo $product_on_hand . '<span style="display:none"> '.$product_stock .":" . $product_temp_stock . ":" . $product_temp_stock_pre. ":" . $product_temp_stock_spare. ":" . $product_send .'</span>';
                                            ?>
                                            
                                            </td>

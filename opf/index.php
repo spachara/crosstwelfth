@@ -168,7 +168,7 @@ if($_POST['order_number_real']){
 	<section class="container_content">
     	<section class="paragraph">
             <hgroup class="titleModule">
-                <h2><?php echo ($data_order['order_status'] != '1' ? 'ตรวจสอบสถานะ' : 'แจ้งชำระเงิน/ที่อยู่จัดส่ง');  ?></h2>
+                <h2><?php echo ($data_order['order_status'] != '1' ? 'ตรวจสอบสถานะ' : 'แจ้งชํําระเงิน/ที่อยู่จัดส่ง');  ?></h2>
             </hgroup>        
             <section class="paragraph03 overflowNone">
 				<section class="blogOrder">
