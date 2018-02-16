@@ -531,7 +531,7 @@ function processPopupLink(val){
 														
 														$total_price = $discount + $order_tran1 + $order_tran2;
 														
-														$sql_update2 = "select * from order_product_tb where order_number = '".$data_order2['order_number']."'";
+														$sql_update2 = "select * from order_product_tb where order_number = '".$data_order2['order_number']."' GROUP BY pro_id";
 														$result_update2 = @mysql_query($sql_update2, $connect);
 														$num_update2 =@mysql_num_rows($result_update2);
 														

@@ -112,7 +112,7 @@ if($_POST['CANCEL'] == 'Cancel'){
 				$real_recive = $numbacktostock;
 						if($real_recive > 0)
 						{
-							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."'";
+							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."' AND order_number !='".$_POST['order_number']."'" ;
 							$sql_reserve .= " AND sent_status = 'RESERVE' order by date_in asc";
 							$result_reserve =@mysql_query($sql_reserve, $connect);
 							
@@ -176,7 +176,7 @@ if($_POST['CANCEL'] == 'Cancel'){
 		
 		if(intval($num_temp) >0 )
 		{
-					$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = 'Cancel by " .$_SESSION['AUTH_PERMISSION_ID']. "' WHERE order_number = '".$_POST['order_number']."' ";
+					$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = CONCAT(order_comment,'" . " Cancel by " . $_SESSION['AUTH_PERMISSION_ID'] . "') WHERE order_number = '".$_POST['order_number']."' ";
 					@mysql_query($edit_order, $connect);
 					$edit_order = "UPDATE order_product_tb SET tracking_number = '' WHERE order_number = '".$_POST['order_number']."' ";
 					@mysql_query($edit_order, $connect);
@@ -294,7 +294,7 @@ if($_POST['CANCELPerItem'] == 'Delete' && isset($_POST['chkDelete']))
 				$real_recive = $numbacktostock;
 						if($real_recive > 0)
 						{
-							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."'";
+							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."' AND order_number !='". $_POST['order_number'] ."'" ;
 							$sql_reserve .= " AND sent_status = 'RESERVE' order by date_in asc";
 							$result_reserve =@mysql_query($sql_reserve, $connect);
 							
@@ -379,7 +379,7 @@ if($_POST['CANCELPerItem'] == 'Delete' && isset($_POST['chkDelete']))
 			$result_tmp1 = @mysql_query($sql_tmp1, $connect); 
 			if (@mysql_num_rows($result_tmp1)==0)
 			{ 
-				$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = 'Cancel by " .$_SESSION['AUTH_PERMISSION_ID']. "' WHERE order_number = '".$_POST['order_number']."' ";
+				$edit_order = "UPDATE order_tb SET order_status = '0', payment_status = '0', tranfer_status = 'NULL', date_update=NOW(),order_comment = CONCAT(order_comment,'" . " Cancel by " . $_SESSION['AUTH_PERMISSION_ID'] . "') WHERE order_number = '".$_POST['order_number']."' ";
 				@mysql_query($edit_order, $connect);
 		
 			}	

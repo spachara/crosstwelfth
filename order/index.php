@@ -116,7 +116,7 @@ if($_GET['del'] != '' ){
 				$real_recive = $numbacktostock;
 						if($real_recive > 0)
 						{
-							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."'";
+							$sql_reserve = "SELECT * FROM temp_order_product where pid ='".$data_tmp['pid']."' AND order_number !='".$_GET['del']."'" ;
 							$sql_reserve .= " AND sent_status = 'RESERVE' order by date_in asc";
 							$result_reserve =@mysql_query($sql_reserve, $connect);
 							

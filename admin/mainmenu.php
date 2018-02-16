@@ -136,6 +136,9 @@ $a = explode('/',$_SERVER['REQUEST_URI']);
                                   <a href="report_payment_form.php" >
                                       <li>สรุปยอดโอนเงิน</li>
                                   </a> 
+								   <a href="sell_report.php" >
+                                      <li>สรุปจำนวนออเดอร์ตามพนักงาน</li>
+                                  </a> 
                                   <?php }?>
                             </ul>
                         </div>

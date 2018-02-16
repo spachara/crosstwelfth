@@ -634,7 +634,7 @@ $(document).ready(function() {
  //$product_on_hand = $product_stock  ." /". $product_temp_stock_pre . " |". $product_send;
                                                 $order_p_stock = 0;
 
-                                                $sql_product_in_order = "SELECT sum(order_p_stock) as order_p_stock FROM order_product_tb WHERE order_number = '".$data_update3['order_number']."'";
+                                                $sql_product_in_order = "SELECT order_p_stock as order_p_stock FROM order_product_tb WHERE order_number = '".$data_update3['order_number']."'";
                                                 $sql_product_in_order .= " AND pro_id = '".$data_update3['pro_id']."' ";
                                                 $result_product_in_order =@mysql_query($sql_product_in_order, $connect);
                                                 $data_product_in_order =@mysql_fetch_array($result_product_in_order);
