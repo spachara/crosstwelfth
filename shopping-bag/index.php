@@ -753,7 +753,7 @@ $(document).ready(function() {
                                             value="<?php echo $data_ship['shipping_id'];?>" 
 											<?php /*echo ($_SESSION['shipping_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_id'] == '' && $s =='1') || 
 											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/>
-                                            <label><?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?></label>
+                                            <?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
                                     <?php } ?>    
 
@@ -815,7 +815,7 @@ $(document).ready(function() {
 											<?php /*echo ($_SESSION['shipping_pre_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_pre_id'] == '' && $s =='1')  || 
 											($total_num_pre_ship > 1 && $data_ship['shipping_id'] == 2)? "checked=checked" : '');*/?>
                                              <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>
-                                            <label><?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?></label>
+                                            <?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
                                     <?php } ?>    
 
@@ -873,7 +873,7 @@ $(document).ready(function() {
                     <?php
                     if($_SESSION['session_id'] || $_SESSION['session_pre_id']){?>
 
-                    <span style="color:#F00" >
+                    <span style="color:#F00;display:none" >
                     	** สำหรับลูกค้าที่อยู่ในเขตกรุงเทพและปริมณฑล การจัดส่ง Ems จะจัดส่งโดยบริษัทขนส่งเอกชน<br />
                         โดยใช้ระยะเวลา 1-2 วัน พนักงานจัดส่งสินค้าจะโทรนัดลูกค้าก่อนการจัดส่งทุกครั้งนะค่ะ
                     </span><br /><br />

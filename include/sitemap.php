@@ -37,7 +37,7 @@ $var_page = count($check_page)-1;
         </div>
     	<div class="sitemap_head">
         	<img src="<?php echo $url_image;?>images/clock.png">
-            <span style="margin-left:10px;">10.00 AM - 20.00 PM</span>
+            <span style="margin-left:10px;">10.30 AM - 17.30 PM</span>
         </div>
         
         
@@ -130,7 +130,7 @@ $var_page = count($check_page)-1;
         	<div class="content_instargram">
             	<img src="<?php echo $url_image;?>images/38-line.png">
                 <div class="instar_text">
-                    Line : crosstwelfth_team
+                    Line : @crosstwelfth
                 </div>
             </div>
         </div>

@@ -322,9 +322,9 @@ $(document).ready(function() {
                                       }elseif($finishSpare == 'OUT' && $data_size['p_stock'] == '0' && $data_size['p_pre'] == '0'){
                                           echo  "Out of stock สินค้าหมดสต๊อก";
 									  }elseif($data_size['p_stock'] == '0' && $data_size['p_pre'] != '0'){
-                                          echo  "Preorder จัดส่ง 10-15 วัน หลังชำระเงิน";
+                                          echo  "Preorder จัดส่ง 15 วัน หลังชำระเงิน";
 									  }elseif($data_size['p_pre'] == '0' && $data_size['p_spare'] != '0'){
-                                          echo  "Preorder จัดส่ง 10-15 วัน หลังชำระเงิน";
+                                          echo  "Preorder จัดส่ง 15 วัน หลังชำระเงิน";
                                       }elseif($data_size['p_stock'] == '0' && $data_size['p_pre'] == '0'  && $data_size['p_spare'] == '0' ){
                                           echo  "Out of stock สินค้าหมดสต๊อก";
                                       }?>

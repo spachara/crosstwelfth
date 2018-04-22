@@ -378,9 +378,9 @@ src="https://www.facebook.com/tr?id=382803885229241&ev=PageView&noscript=1"
                                           echo  "Out of stock สินค้าหมดสต๊อก";
 										  $out3++;
 									  }elseif($data_color['p_stock'] == '0' && $data_color['p_pre'] != '0'){
-                                          echo  "Preorder จัดส่ง 10-15 วัน หลังชำระเงิน";
+                                          echo  "Preorder จัดส่ง 15 วัน หลังชำระเงิน";
 									  }elseif($data_color['p_pre'] == '0' && $data_color['p_spare'] != '0'){
-                                          echo  "Preorder จัดส่ง 10-15 วัน หลังชำระเงิน";
+                                          echo  "Preorder จัดส่ง 15 วัน หลังชำระเงิน";
                                       }elseif($data_color['p_stock'] == '0' && ($data_color['p_pre'] == '0'  && $data_color['p_spare'] == '0') ){
                                           echo  "Out of stock สินค้าหมดสต๊อก";
 										  $out3++;
