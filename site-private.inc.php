@@ -1,8 +1,8 @@
 <?php
 /*--------- DATABASE CONNECTION INFO---------*/ 
 $hostname="localhost"; 
-$mysql_login="crosstwe_db"; 
-$mysql_password="jQ8Nwt74"; 
+$mysql_login="root"; 
+$mysql_password=""; 
 $database="crosstwe_db";
 $_WEB_NAME="Crosstwelfth";
 
