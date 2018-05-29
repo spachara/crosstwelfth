@@ -689,9 +689,9 @@ $(document).ready(function() {$(document).ready(function() {
                         <tr>
                           <td colspan="3">&nbsp;                          </td>
                         	<td class="hilight" align="center" valign="middle">
-                            	TOTAL
+                            	TOTAL3
                             </td>
-                            <td class="hilight" align="center" valign="middle">
+                            <td class="hilight" align="center" valign="middle"> 
                             	<strong>
                             <?php
                                 $grand_total_pre = $product_total_pre;
