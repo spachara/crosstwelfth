@@ -501,8 +501,8 @@ function processPopupLink(val){
 													$data_order2= @mysql_fetch_array($result_insert_order2);
 													
 													if($num_order2 == 2){ 
-														$val_order1 = $data_order2['order_number']."-IN";
-														$val_order2 = $data_order2['order_number']."-PRE";
+														$val_order1 = $data_order2['order_number']."-IN".$data_order2['order_transport'];
+														$val_order2 = $data_order2['order_number']."-PRE".$data_order2['order_transport'];
 														
 														$sql_order1 = "select * from order_tb where order_number = '".$data_order2['order_number']."' and order_type = 'IN' ";
 														$result_order1 = @mysql_query($sql_order1, $connect);
@@ -547,7 +547,7 @@ function processPopupLink(val){
 														
 													
 													}else{
-														$val_order1 = $data_order2['order_number']."-".$data_order2['order_type'];
+														$val_order1 = $data_order2['order_number']."-".$data_order2['order_type'].$data_order2['order_transport'];
 														$order_total1 = $data_order['order_total'];
 														$order_id1 = $data_order['order_id'];
 														$order_dis1 = $data_order['order_promotion'];
@@ -833,6 +833,8 @@ function processPopupLink(val){
                                                     echo "<font color=red>โอนขาด</font>:".$data_order['tranfer_value'];
                                                 }elseif($data_order['tranfer_status']==3){
                                                     echo "<font color=#FF6600>โอนเกิน</font>:".$data_order['tranfer_value'];
+                                                }elseif($data_order['tranfer_status']==4){
+                                                    echo "<font color=#FF6600>ปลายทาง</font>:".$data_order['tranfer_value'];
                                                 }
                                             ?>
                                         </td>

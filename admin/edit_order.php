@@ -630,6 +630,7 @@ function number_only()
                             <option value="1" <?php echo ($data_order['tranfer_status'] == '1' ? "selected=selected" : "" );?>>โอนพอดี</option>
                             <option value="2" <?php echo ($data_order['tranfer_status'] == '2' ? "selected=selected" : "" );?>>โอนขาด</option>
                             <option value="3" <?php echo ($data_order['tranfer_status'] == '3' ? "selected=selected" : "" );?>>โอนเกิน</option>
+							<option value="4" <?php echo ($data_order['tranfer_status'] == '4' ? "selected=selected" : "" );?>>ปลายทาง</option>
                           </select>                        
                         
                         <input type="text" name="tran_val" value="<?php echo $data_order['tranfer_value'];?>" style="width:50px" />

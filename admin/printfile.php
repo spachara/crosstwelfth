@@ -51,11 +51,12 @@ require_once '../dbconnect.inc';
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" font-family: 'layiji_mahaniyom_v1.41regular'; font-size:16px;">
 			<tr><td width="60%">
 			<?php 
-			$sql_update5 = "select * from order_product_tb where order_number = '".$key."' ";
-			$sql_update5 .= "and ready_time = '".$_GET['d']."' and round_update = '".$_GET['r']."' and ready_sent <> '0' order by order_type";
+			
+			$sql_update5 = "select * from order_product_tb INNER JOIN order_tb ON order_product_tb.order_number = order_tb.order_number  where order_product_tb.order_number = '".$key."' ";			
+			$sql_update5 .= "and order_product_tb.ready_time = '".$_GET['d']."' and order_product_tb.round_update = '".$_GET['r']."' and order_product_tb.ready_sent <> '0' order by order_product_tb.order_type";			
 			$result_update5 = @mysql_query($sql_update5, $connect);
-			$num_update5 =@mysql_num_rows($result_update5);
-			$order_to = '';
+			$num_update5 =@mysql_num_rows($result_update5);			
+			$order_to = '';			
 			$type = '';
 				for($i5=1;$i5<=intval($num_update5);$i5++){
 				$data_update5 =@mysql_fetch_array($result_update5);
@@ -63,7 +64,7 @@ require_once '../dbconnect.inc';
 					if($data_update5['order_type'] !=  $type){
 					$type = $data_update5['order_type'];
 					if( $i5 > 1) $order_to .= "<br>";
-					$order_to .= "Order number : ".$data_update5['order_number']."-".$data_update5['order_type'];
+					$order_to .= "Order number : ".$data_update5['order_number']."-".$data_update5['order_type']." ".$data_update5['order_transport'];
 					}
 				}
 			

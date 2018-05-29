@@ -13,6 +13,7 @@ $a = explode('/',$_SERVER['REQUEST_URI']);
                         </div>
                         <div class="block_style1-content">
                         	<ul>
+                            
                                   <a href="new_order.php">
                                       <li>รายการสั่งซื้อทั้งหมด</li>
                                   </a>
@@ -22,8 +23,11 @@ $a = explode('/',$_SERVER['REQUEST_URI']);
                                   </a>
                                   <?php }?>
                                   <a href="readytosent.php">
-                                      <li>อัพเดท รายการจัดส่ง</li>
+                                      <li>รายการจัดส่ง</li>
                                   </a>
+                                  <a href="readytosentdeli.php">
+                                      <li>รายการจัดส่งเก็บเงินปลายทาง</li>
+                                  </a>                            
 								 <!-- <a href="readytosent2.php">
                                       <li>อัพเดท รายการจัดส่ง (ใหม่)</li>
                                   </a>-->

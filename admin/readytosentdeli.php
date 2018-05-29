@@ -262,7 +262,7 @@ $(document).ready(function() {
             
                                 	<!--Edit Navigator-->
                                    <div class="navigator">
-                                        <a href="readytosent.php">รายการจัดส่ง</a>
+                                        <a href="readytosent.php">รายการจัดส่งเก็บเงินปลายทาง</a>
                                         
                                    </div>
                                    <!--End Navigator-->            
@@ -272,7 +272,7 @@ $(document).ready(function() {
                 	<div class="block_style2_top">
                     	<div class="block_style2_top-l"></div>
                         <div class="block_style2_top-r"></div>
-                        <div class="block_style2_top-t">รายการจัดส่ง</div>
+                        <div class="block_style2_top-t">รายการจัดส่งเก็บเงินปลายทาง</div>
                     </div>
                     <div class="block_style2_content">
 
@@ -329,7 +329,7 @@ $(document).ready(function() {
                        </td>
                       </tr>
                       <tr>
-                        <td>วิธีการส่ง</td>
+                        <!--<td>วิธีการส่ง</td>
                         <td>
                         
                         <select name="order_status" >
@@ -337,10 +337,11 @@ $(document).ready(function() {
                           <option value="ไปรษณีย์ส่งด่วน พิเศษ ( EMS )" <?php echo ($_POST['order_status'] == 'ไปรษณีย์ส่งด่วน พิเศษ ( EMS )' ? "selected=selected" : "");?>>EMS</option>
                           <option value="ลงทะเบียน" <?php echo ($_POST['order_status'] == 'ลงทะเบียน' ? "selected=selected" : "");?>>ลงทะเบียน</option>
                         </select>
-                        
+                        -->
                         </td>
                         <td>วันที่ชำระเงิน</td>
                         <td><input type="text" name="order_date" id="datepicker2" value="<?php echo $_POST['order_date'];?>" /></td>
+                        
                         <td>เบอร์โทร</td>
                         <td><input type="text" name="order_phone" id="order_phone" value="<?php echo $_POST['order_phone'];?>" /></td>
                       </tr>
@@ -390,7 +391,7 @@ $(document).ready(function() {
                         <td width="5%" height="25" align="center" bgcolor="#CCCCCC">ลำดับ</td>
                         <td width="17%" align="center" bgcolor="#CCCCCC">ใบสั่งซื้อ</td>
                         <td width="13%" align="center" bgcolor="#CCCCCC">ชื่อ</td>
-                        <td width="9%" align="center" bgcolor="#CCCCCC">วันที่ชำระเงิน</td>
+                        <td width="9%" align="center" bgcolor="#CCCCCC">วันที่ส่ง</td>
                         <td width="54%" align="center" bgcolor="#CCCCCC"><input type="checkbox" id="selecctall"/> Selecct All</td>
                         <td width="2%" align="center" bgcolor="#CCCCCC">&nbsp;</td>
                       </tr>
@@ -402,7 +403,7 @@ $(document).ready(function() {
                                                                         ELSE  ''
                                                                         END SEPARATOR  '' ) group_send, COUNT( order_number ) order_count
                                                                         FROM  order_tb";
-                                                                         $sql_order .= " where payment_status in( '1', '3') and tranfer_status in( '1', '3')";
+                                                                         $sql_order .= " where payment_status in('4') and tranfer_status in('4')";
                                                                         $sql_order .= " and order_status <> '0' and status_ready = '0' ";
 									if($_POST['Search'] == 'Search'){
 										
