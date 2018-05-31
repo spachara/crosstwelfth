@@ -399,7 +399,7 @@ Selecct All</td>
 														and order_product_tb.order_type = order_tb.order_type where order_product_tb.ready_time <> '' " ;
 										 }
 										 
-									$sql_order .= " and order_tb.payment_status in ('1','3') and order_tb.status_finish <> '1' and order_tb.order_status = '2' GROUP BY order_tb.order_number ORDER BY order_tb.date_in desc";
+									$sql_order .= " and order_tb.payment_status in ('1','3','6') and order_tb.status_finish <> '1' and order_tb.order_status in ('2','6') GROUP BY order_tb.order_number ORDER BY order_tb.date_in desc";
                                     $result_order =@mysql_query($sql_order, $connect);
                                     $num_order =@mysql_num_rows($result_order);
 
@@ -429,8 +429,8 @@ Selecct All</td>
 						$data_order2= @mysql_fetch_array($result_insert_order2);
 						
 						if($num_order2 == 2){ 
-							$val_order1 = $data_order2['order_number']."-IN";
-							$val_order2 = $data_order2['order_number']."-PRE";
+							$val_order1 = $data_order2['order_number']."-IN".$data_order2['order_transport'];
+							$val_order2 = $data_order2['order_number']."-PRE".$data_order2['order_transport'];
 							
 							$sql_order1 = "select * from order_tb where order_number = '".$data_order2['order_number']."' and order_type = 'IN' and status_finish <> '1'";
 							$result_order1 = @mysql_query($sql_order1, $connect);
@@ -493,7 +493,7 @@ Selecct All</td>
 							}
 
 						}else{
-							$val_order1 = $data_order2['order_number']."-".$data_order2['order_type'];
+							$val_order1 = $data_order2['order_number']."-".$data_order2['order_type']." ".$data_order2['order_transport'];
 							$order_total1 = $data_order['order_total'];
 							$order_id1 = $data_order['order_id'];
 							$order_dis1 = $data_order['order_promotion'];

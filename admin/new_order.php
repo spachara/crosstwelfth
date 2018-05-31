@@ -820,9 +820,12 @@ function processPopupLink(val){
 														echo "<font color=#0000FF>จัดส่งสินค้าเรียบร้อยแล้ว</font>";
 													}elseif($data_order['order_status']==4){
 														echo "<font color=#00CC00>Complete</font>";
+                                                    }elseif($data_order['order_status']==6){
+														echo "<font color=#00CC00>จัดส่งสินค้า/รอชำระเงินปลายทาง</font>";
 													}
+                                                    
 												}
-												?>
+												?>s
                                         </td>
                                         <td align="center" bgcolor="#F5F5F5">
                                         			
@@ -833,8 +836,8 @@ function processPopupLink(val){
                                                     echo "<font color=red>โอนขาด</font>:".$data_order['tranfer_value'];
                                                 }elseif($data_order['tranfer_status']==3){
                                                     echo "<font color=#FF6600>โอนเกิน</font>:".$data_order['tranfer_value'];
-                                                }elseif($data_order['tranfer_status']==4){
-                                                    echo "<font color=#FF6600>ปลายทาง</font>:".$data_order['tranfer_value'];
+                                                }elseif($data_order['tranfer_status']==6){
+                                                    echo "<font color=#000000>เก็บปลายทาง</font>";                                                    
                                                 }
                                             ?>
                                         </td>

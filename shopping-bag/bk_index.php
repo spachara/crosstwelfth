@@ -47,6 +47,8 @@ if ($_POST['pro_id'] != '' ) {
 	session_unregister("session_tranCostPreChk");
 	session_unregister("session_SubmitGrandTotal");
 	session_unregister("session_tranCostPlusCal");
+	session_unregister("session_real");
+	session_unregister("session_realPre");
 	session_unregister("session_realShip");
 	session_unregister("session_realShipPre");
 	session_unregister("session_PointDis");
@@ -507,7 +509,10 @@ $(document).ready(function() {
 
 }
 
-$(document).ready(function() {
+
+}
+
+$(document).ready(function() {$(document).ready(function() {
     $('.product_num_stock').keyup(function() {
 		var pro_num = $(this).val(), pro_id = $(this).attr('alt'), pro_price = $('#product_price_stock' + pro_id).val(), total_price = 0;
 		//alert(pro_price * pro_num);
@@ -584,7 +589,7 @@ $(document).ready(function() {
                           </td>
                         	<td align="center" valign="middle">
                         	  <strong><img alt="" title="" src="../images/products/<?php echo $_SESSION['session_code'][$i];?>/<?php echo $_SESSION['session_color'][$i];?>/s.jpg" height="100" /><br />
-                       	      #CODE :<?php echo $_SESSION['session_code'][$i];?> #SIZE : <?php echo $_SESSION['session_size'][$i];?> <?php echo ($_SESSION['sess_language'] == 'eng' ? $_SESSION['session_name_th'][$i] : $_SESSION['session_name_eng'][$i]);?></strong>                      	  </td>
+                       	      #CO0DE :<?php echo $_SESSION['session_code'][$i];?> #SIZE : <?php echo $_SESSION['session_size'][$i];?> <?php echo ($_SESSION['sess_language'] == 'eng' ? $_SESSION['session_name_th'][$i] : $_SESSION['session_name_eng'][$i]);?></strong>                      	  </td>
                             <td align="center" valign="middle">
                             	<INPUT TYPE="text" onkeypress="return isNumber(event)" NAME="prd_num[<?php echo $i; ?>]"  VALUE="<?php echo $_SESSION['session_num'][$i];?>" SIZE='4' class="product_num_stock" alt="<?php echo $i;?>">
                                 <?php $total_num_ship = $total_num_ship + $_SESSION['session_num'][$i]?>
@@ -676,7 +681,7 @@ $(document).ready(function() {
                             	<strong><?php echo number_format($_SESSION['session_pre_price'][$i]);?></strong>
                                 <input name="product_price_pre" value="<?php echo $_SESSION['session_pre_price'][$i];?>" type="hidden" id="product_price_pre<?php echo $i;?>" />
                             </td>
-                            <td align="center" valign="middle">
+                            <td align="center" valign="middle">  
                             	<strong id="show_pre<?php echo $i;?>"><?php echo number_format($_SESSION['session_pre_price'][$i] * $_SESSION['session_pre_num'][$i]);?></strong>
                             </td>
                         </tr>
@@ -684,9 +689,9 @@ $(document).ready(function() {
                         <tr>
                           <td colspan="3">&nbsp;                          </td>
                         	<td class="hilight" align="center" valign="middle">
-                            	TOTAL
+                            	TOTAL3
                             </td>
-                            <td class="hilight" align="center" valign="middle">
+                            <td class="hilight" align="center" valign="middle"> 
                             	<strong>
                             <?php
                                 $grand_total_pre = $product_total_pre;
@@ -709,13 +714,19 @@ $(document).ready(function() {
 			<?php
 			$grand_num = $total_num_ship + $total_num_pre_ship;
 
-			$select_ship3 = "SELECT * FROM shipping_tb WHERE shipping_ranking order by shipping_ranking ";
+			$select_ship3 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '2' ";
 			$result_ship3 =@mysql_query($select_ship3, $connect);
 			$data_ship3 =@mysql_fetch_array($result_ship3);
 
+			$select_ship4 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '3' ";
+			$result_ship4 =@mysql_query($select_ship4, $connect);
+			$data_ship4 =@mysql_fetch_array($result_ship4);
+
 			$ems_price = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $grand_num );
 			$normal_price =$data_ship3['shipping_cost'] + $data_ship3['shipping_p'] ;
-/*
+
+			$deli_price = $data_ship4['shipping_cost'] + ($data_ship4['shipping_p'] * $grand_num );
+			$normal_priceli =$data_ship4['shipping_cost'] + $data_ship4['shipping_p'] ;/*
 			$select_ship2 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '1' ";
 			$result_ship2 =@mysql_query($select_ship2, $connect);
 			$data_ship2 =@mysql_fetch_array($result_ship2);
@@ -725,7 +736,8 @@ $(document).ready(function() {
 			$in_stock_ems = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $total_num_ship );
 			$pre_ems = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $total_num_pre_ship );
 
-			
+			$in_stock_deli = $data_ship4['shipping_cost'] + ($data_ship4['shipping_p'] * $total_num_ship );
+			$pre_deli = $data_ship4['shipping_cost'] + ($data_ship4['shipping_p'] * $total_num_pre_ship );
 			
 			if ($_SESSION['session_id']) {
 
@@ -734,43 +746,36 @@ $(document).ready(function() {
                 <h2>IN-STOCK SHIPPING</h2>
             </hgroup>        
                     <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                    <ul>
-					<?php 
-									$select_ship = "SELECT * FROM shipping_tb WHERE shipping_ranking NOT IN ('','0') ORDER BY shipping_ranking ";
+                    
+                        <tr class="twoTable">
+
+                        	<td width="48%" align="center" valign="middle">
+                            	<div class="choice-tabel">
+                                	<ul>
+									<?php 
+									$select_ship = "SELECT * FROM shipping_tb WHERE shipping_ranking NOT IN ('','0') order by shipping_ranking ";
 									$result_ship =@mysql_query($select_ship, $connect);
 									$num_ship =@mysql_num_rows($result_ship);
-									for($s=1;$s<=intval($num_ship);$s++)
-									{
+									for($s=1;$s<=intval($num_ship);$s++){
                                     $data_ship =@mysql_fetch_array($result_ship);	
                                     ?>
-					</ul>
-                        <tr class="twoTable">
-						<td colspan="3" width="2%" align="left" valign="middle">
-						<input onclick="chk_order()" name="shipping_type" type="radio"  
+                                    	<li>
+                                        	<input onclick="chk_order()" name="shipping_type" type="radio"  											
 											<?php //echo ($total_num_ship > 1 && $data_ship['shipping_id'] == '1' ? "disabled=disabled" : "" );?> 
                                             value="<?php echo $data_ship['shipping_id'];?>" 
 											<?php /*echo ($_SESSION['shipping_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_id'] == '' && $s =='1') || 
-											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/></td>
-                        	<td width="48%" align="left" valign="middle"  >
-                            	<div class="choice-tabel" >
-                                	<ul>
-									
-                                    	<li>                                        	
-										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
+											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/>
+                                            <?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>											
                                         </li>
-                                    <?php ?>    
-                						
-                			
+			<?php }?>
                                     </ul>
                                 </div>
                             </td>
-							
+
                             <td width="52%" align="center" valign="middle">
                             	<strong>
-                                <div id="shipCost"> 
-								
-								<?php 
-								
+                                <div id="shipCost">
+								<?php 								
                                 if($_SESSION['session_realShip']){
 									echo $old_tran = $_SESSION['session_realShip'];
 								}else{
@@ -782,12 +787,11 @@ $(document).ready(function() {
 									echo $old_tran = $in_stock_ems;
 									}
 								}
-								
-							}?>
+								?>
                                 </div>
-                                </strong>                            
-                          </td>
-						  </tr>                        
+                                </strong>                              
+                          	</td>
+                        </tr>
 						
                     </table>  
 			<?php
@@ -805,34 +809,27 @@ $(document).ready(function() {
                         <h2>PRE-ORDER SHIPPING</h2>
                     </hgroup>        
                     <table width="100%" border="0" cellpadding="0" cellspacing="0">
-					<?php 
+						<tr class="twoTable">
+                       	  <td width="48%" align="center" valign="middle">
+                            	<div class="choice-tabel">
+                                	<ul>
+									<?php 
 									$select_ship = "SELECT * FROM shipping_tb WHERE shipping_ranking NOT IN ('','0')  ORDER BY shipping_ranking ";
 									$result_ship =@mysql_query($select_ship, $connect);
 									$num_ship =@mysql_num_rows($result_ship);
 									for($s=1;$s<=intval($num_ship);$s++){
                                     $data_ship =@mysql_fetch_array($result_ship);	
                                     ?>
-						<tr class="twoTable">
-						<td colspan="3" width="2%" align="left" valign="middle">                            	
-                                	<ul>									
                                     	<li>
-                                        	<input onclick="chk_order2()"  name="shipping_type_pre" type="radio" checked="checked" <?php //echo ($total_num_pre_ship > 1 && $data_ship['shipping_id'] == '1' ? "disabled=disabled" : "" );?> id="<?php echo $s;?>" value="<?php echo $data_ship['shipping_id'];?>" 
+                                        	<input onclick="chk_order2()"  name="shipping_type_pre" type="radio"  <?php //echo ($total_num_pre_ship > 1 && $data_ship['shipping_id'] == '1' ? "disabled=disabled" : "" );?> id="<?php echo $s;?>" value="<?php echo $data_ship['shipping_id'];?>" 
 											<?php /*echo ($_SESSION['shipping_pre_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_pre_id'] == '' && $s =='1')  || 
 											($total_num_pre_ship > 1 && $data_ship['shipping_id'] == 2)? "checked=checked" : '');*/?>
-                                             <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>                                            
-                                        </li>                                    
-
-                                    </ul>                                
-                            </td>
-							<td width="48%" align="left" valign="middle"  >
-                            	<div class="choice-tabel" >
-                                	<ul>									
-                                    	<li>                                        	
-										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
+                                             <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>
+                                            <?php echo ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
-                                    <?php ?>    
-                						
-                			
+										
+                                    <?php } ?>    
+
                                     </ul>
                                 </div>
                             </td>
@@ -861,23 +858,23 @@ $(document).ready(function() {
 							   
                                 if($_SESSION['session_realShipPre']){
 									echo $old_tran_pre = $_SESSION['session_realShipPre'];
-								}else{
-										if($grand_num > 1){
+								}else{if($grand_num > 1){
 										    echo $old_tran_pre = $pre_ems;
 										}elseif($_SESSION['shipping_pre'] == '2'){
 											echo $old_tran_pre = $pre_ems;
 										}else{
 											echo $old_tran_pre = $normal_price;
 										}
+										
 								}
-							
-							}?>
+								?>
 
 								</strong></div>
-							
+
                           </td>
-						  
                         </tr>
+                        
+						
                   </table>  
                    <?php }else{ ?>
                     <input type="hidden" name="groupDeliveryHidden" id="groupDeliveryHidden
@@ -935,6 +932,8 @@ $(document).ready(function() {
 						  }
 						  
 						  //echo "<br>GrandTotal = ".$GrandTotal;
+						  //echo "<br>normal_grand = ".$normal_grand;
+						  //echo "<br>grand_dis_js = ".$grand_dis_js;
 
 						  if ($_SESSION['session_pre_id']) {
 						  $GrandTotal = $GrandTotal + $grand_total_pre + $old_tran_pre;

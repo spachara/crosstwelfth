@@ -10,32 +10,14 @@ if(isset($_SESSION['AUTH_PERMISSION_ID'])==false) {
 
 if($_POST['submit'] == 'Save' ){
 	
-$date_check = date('Y')."-".date('m')."-".date('d');
-$sql_max = "select max(round_update) as max_round from order_product_tb where ready_time = '".$date_check ."'";
-$result_max = @mysql_query($sql_max, $connect);
-$data_max=@mysql_fetch_array($result_max);
-$maxx_date = $data_max['max_round']+1;
 
-		if($_POST['trackingProId']){
-			
-		foreach ($_POST['trackingProId'] as $v) {
-			
-			
-			if($_POST['tracking'][$v] == '1'){
-					$sql_update_payment = "UPDATE order_product_tb SET ready_sent = '".$_POST['tracking'][$v]."', status_tracking = '1', ready_time = NOW()";
-					$sql_update_payment .= ", round_update = '".$maxx_date."' , round_comment = '".$_POST['round_comment']."'";
-					$sql_update_payment .= " where order_p_id = '".$_POST['trackingProId'][$v]."'";
-					$result_update_payment = @mysql_query($sql_update_payment, $connect);
-										
-			}
-		}
+
 		
-		}
 		
 		if($_POST['chkDone']){
 			foreach ($_POST['chkDone'] as $r) {
 		
-			$sql_update_done = "UPDATE order_tb SET status_ready = '1'";
+			$sql_update_done = "UPDATE order_tb SET payment_status = '7'";
 			$sql_update_done .= " where order_number = '".$r."'";
 			$result_update_done = @mysql_query($sql_update_done, $connect);
 			//echo $sql_update_done;
@@ -46,7 +28,7 @@ session_unregister('AllID');
 session_unregister('AllNUMBERID');
 ?>		 
 		<script>
-			location.href='readytosent.php'; //รีเฟสหน้า
+			location.href='readytosentdeli.php'; //รีเฟสหน้า
 		</script>
 <?php
 
@@ -286,39 +268,21 @@ $(document).ready(function() {
                       <tr>
                         <td width="8%">รหัสสินค้า</td>
                         <td width="29%"><input type="text" name="product_code" value="<?php echo $_POST['product_code'];?>" /></td>
-                        <td width="10%">Color </td>
+                        <td width="10%">สถานะการชำระ </td>
                         <td width="23%">
-                        
-                        <select name="color">
-                        <option></option>
-						<?php
-                        $sql_color = "SELECT distinct(name) as name FROM color_tb ";
-                        $result_color = @mysql_query($sql_color, $connect);
-                        $num_color =@mysql_num_rows($result_color);
-                        
-                        for($i=1;$i<=intval($num_color);$i++){
-                        $data_color =@mysql_fetch_array($result_color);
+                        <?php
+                        $sql_data_pay = "SELECT distinct(name) as name FROM order_tb ";
+                        $result_data_pay = @mysql_query($sql_data_pay, $connect);
+                        $data_pay =@mysql_fetch_array($result_data_pay);                       
+                     
                         ?>
-                        	<option value="<?php echo $data_color['name']; ?>" <?php echo ($_POST['color'] == $data_color['name'] ? "selected=selected" : "" );?> ><?php echo $data_color['name']; ?></option>
-                        <?php } ?>
-                        </select>                        
+                        <select name="pay" >
+                            <option value="" <?php echo ($data_pay['payment_status'] == '' ? "selected=selected" : "" );?>></option>
+                            <option value="6" <?php echo ($data_pay['payment_status'] == '6' ? "selected=selected" : "" );?>>ยังไม่ได้รับเงิน</option>
+                            <option value="7" <?php echo ($data_pay['payment_status'] == '7' ? "selected=selected" : "" );?>>ได้รับเงินแล้ว</option>                            
+                        </select>          
                         </td>
-                        <td width="6%">Size</td>
-                        <td width="24%">
-                        <select name="size">
-                        <option></option>
-						<?php
-                        $sql_size = "SELECT distinct(name) as name FROM size_tb ";
-                        $result_size = @mysql_query($sql_size, $connect);
-                        $num_size =@mysql_num_rows($result_size);
-                        
-                        for($i=1;$i<=intval($num_size);$i++){
-                        $data_size =@mysql_fetch_array($result_size);
-                        ?>
-                        	<option value="<?php echo $data_size['name']; ?>" <?php echo ($_POST['size'] == $data_size['name'] ? "selected=selected" : "" );?>><?php echo $data_size['name']; ?></option>
-                        <?php } ?>
-                        </select>                        
-                        </td>
+                       
                       </tr>
                       <tr>
                         <td>ชื่อ</td>
@@ -339,11 +303,11 @@ $(document).ready(function() {
                         </select>
                         -->
                         </td>
-                        <td>วันที่ชำระเงิน</td>
-                        <td><input type="text" name="order_date" id="datepicker2" value="<?php echo $_POST['order_date'];?>" /></td>
+                        <td>วันที่ส่ง</td>
+                        <td><input type="text" name="ems_date" id="datepicker" value="<?php echo $_POST['ems_date'];?>" /></td>
                         
-                        <td>เบอร์โทร</td>
-                        <td><input type="text" name="order_phone" id="order_phone" value="<?php echo $_POST['order_phone'];?>" /></td>
+                        <td>เลขที่พัสดุ</td>
+                        <td><input type="text" name="tracking_number"  value="<?php echo $_POST['tracking_number'];?>" /></td>
                       </tr>
                       <tr>
                         <td>จังหวัด</td>
@@ -370,9 +334,9 @@ $(document).ready(function() {
                 <div class="demo" style="text-align:right">
                   <table width="100%" border="0" cellspacing="5" cellpadding="0" style="font-family:Tahoma, Geneva, sans-serif; font-size:12px;">
                     <tr>
-                      <td width="34%" align="center"><input type="submit" name="submit3" value="View select order" /></td>
+                      <td width="34%" align="center"></td>
                       <td width="34%" align="center"><span class="demo" style="text-align:center">
-                        <input type="submit" name="submit2" value="Update" />
+                        
                       </span></td>
                       <td width="8%" align="right" bgcolor="#F8F8F8">Comment :</td>
                       <td width="18%" align="right" bgcolor="#F8F8F8"><textarea name="round_comment" id="round_comment"><?php echo $_POST['round_comment'];?></textarea></td>
@@ -390,21 +354,25 @@ $(document).ready(function() {
                       <tr>
                         <td width="5%" height="25" align="center" bgcolor="#CCCCCC">ลำดับ</td>
                         <td width="17%" align="center" bgcolor="#CCCCCC">ใบสั่งซื้อ</td>
-                        <td width="13%" align="center" bgcolor="#CCCCCC">ชื่อ</td>
+                        <td width="10%" align="center" bgcolor="#CCCCCC">ชื่อ</td>
                         <td width="9%" align="center" bgcolor="#CCCCCC">วันที่ส่ง</td>
-                        <td width="54%" align="center" bgcolor="#CCCCCC"><input type="checkbox" id="selecctall"/> Selecct All</td>
+                        <td width="9%" align="center" bgcolor="#CCCCCC">เลขที่พัสดุ</td>
+                        <td width="9%" align="center" bgcolor="#CCCCCC">จำนวนเงิน</td>
+                        <td width="31%" align="center" bgcolor="#CCCCCC">รายละเอียดสินค้า</td>
+                        <td width="13%" align="center" bgcolor="#CCCCCC">สถานะการชำระ</td>
                         <td width="2%" align="center" bgcolor="#CCCCCC">&nbsp;</td>
                       </tr>
+                      <!--Search-->
                       <?php 
-                                                                        $sql_order =  "SELECT order_number, order_comment, payment_date, order_address2, GROUP_CONCAT( CONCAT( order_number,  '-', order_type,  ' ', order_transport ) 
+                                                                        $sql_order =  "SELECT order_number, order_comment, payment_date, order_address2 , order_total,order_transport_status ,ems_date,payment_status, GROUP_CONCAT( CONCAT( order_number,  '-', order_type,  ' ', order_transport ) 
                                                                         ORDER BY order_type ) order_concate, GROUP_CONCAT( 
                                                                         CASE WHEN order_type =  'PRE'
                                                                         THEN order_group
                                                                         ELSE  ''
                                                                         END SEPARATOR  '' ) group_send, COUNT( order_number ) order_count
-                                                                        FROM  order_tb";
-                                                                         $sql_order .= " where payment_status in('4') and tranfer_status in('4')";
-                                                                        $sql_order .= " and order_status <> '0' and status_ready = '0' ";
+                                                                        FROM  order_tb ";
+                                                                         $sql_order .= " where status_finish = '1'";
+                                                                        $sql_order .= "  and order_status in ('3') and payment_status in ('6','7')";
 									if($_POST['Search'] == 'Search'){
 										
 										
@@ -413,12 +381,11 @@ $(document).ready(function() {
 							
 										 if($_POST['product_code'] != '' ){
 											 
-											 $sql_product = "select * from order_product_tb where pro_code like '%".$_POST['product_code']."%' ";
+											 $sql_product = "select * from order_product_tb where pro_code like '%".$_POST['product_code']."%' ";											 
 											 
-											 
-												 if($_POST['size'] != '' ){
+												 if($_POST['tracking_number'] != '' ){
 													 
-												 $sql_product .= " AND order_p_size = '".$_POST['size']."'";
+												 $sql_product .= " AND tracking_number = '".$_POST['tracking_number']."'";
 												 
 												 }
 
@@ -452,9 +419,15 @@ $(document).ready(function() {
 										 $all_number = substr($all_number,0,-1);
 										 $sql_order .= " AND order_number in (".$all_number.")";
 										 
-										 }
+                                         }
+                                          
+                                         
 										 
-
+                                         if($_POST['pay'] != '' ){
+                                            
+                                        $sql_order .= " AND payment_status like '%".$_POST['pay']."%'";
+                                        
+                                        }
 										 if($_POST['order_employee'] != '' ){
 											 
 										 $sql_order .= " AND order_employee like '%".$_POST['order_employee']."%'";
@@ -478,9 +451,9 @@ $(document).ready(function() {
 										 $sql_order .= " AND order_province like '%".$_POST['u_province']."%'";
 										 
 										 }
-										 if($_POST['order_date'] != '' ){
+										 if($_POST['ems_date'] != '' ){
 											 
-										 $sql_order .= " AND payment_date like '%".$_POST['order_date']."%'";
+										 $sql_order .= " AND ems_date like '%".$_POST['ems_date']."%'";
 										 
 										 }
 										 if($_POST['order_number'] != '' ){
@@ -489,7 +462,8 @@ $(document).ready(function() {
 											 
 										 $sql_order .= " AND order_number like '%".$_POST['order_number']."%' ";
 										 
-										 } 
+                                         } 
+                                         
 									}elseif($_POST['submit3']){
 										
 										$arr_numId = explode(',',$_SESSION['AllNUMBERID']);
@@ -510,7 +484,7 @@ $(document).ready(function() {
 										 
 										 
 									} 
-                                                                        $sql_order .= " GROUP BY order_number  ORDER BY payment_date  , order_type";
+                                                                        $sql_order .= " GROUP BY order_number  ORDER BY ems_date,order_number";
                                                                        
 								   
 								    $result_order =@mysql_query($sql_order, $connect);
@@ -528,7 +502,9 @@ $(document).ready(function() {
 									
 
                                     ?>
+                                    <!--Search-->
                       <tr>
+                      <!-- 1 -->
                         <td height="25" align="center" valign="top" bgcolor="#F5F5F5">
 						
 						<?php 
@@ -541,12 +517,12 @@ $(document).ready(function() {
 							}
 							?>
 
-                        <input type="checkbox" name="number[<?php echo $data_order['order_number'];?>]" value="1" <?php echo ($chkOk == 'ok' ? "checked=checked" : "" );?>/>
-                        <input type="hidden" name="number_id[<?php echo $data_order['order_number'];?>]" value="<?php echo $data_order['order_number'];?>" />
-                        </td> <!-- 1 -->
+                         
+                        </td>
+                         <!-- 1 -->
+                         <!-- 2 -->
                         <td valign="top" bgcolor="#F5F5F5">
-								<?php 
-                                                                
+								<?php                                                                
                                            
                             $val_order1 = $data_order['order_number'] . '-IN';
                             $val_order2 = $data_order['order_count'] > 1 ? $data_order['order_number'] . '-PRE' : '';
@@ -570,30 +546,40 @@ $(document).ready(function() {
 						  
 						  ?></a> </div>
                           <?php } ?>
-                        </td><!-- 2 -->
-                        <td align="center" valign="top" bgcolor="#F5F5F5">
-						
-						<?php 
-						
-						$name = explode('<br>',$data_order['order_address2']);
-						
+                        </td>
+                        <!-- 2 -->
+                        <!-- 3 -->
+                        <td align="center" valign="top" bgcolor="#F5F5F5">						
+						<?php 						
+						$name = explode('<br>',$data_order['order_address2']);						
 						echo str_replace('ชื่อ : ','',$name[0])."<br>";
 						echo str_replace('จังหวัด : ','',$name[2])."<br>";
 						echo str_replace('เบอร์โทรศัพท์ : ','',$name[4])."<br>";
-
-						?>
-                        
-                        
-                        
-                        </td><!-- 3 -->
-                        <td align="center" valign="top" bgcolor="#F5F5F5"><?php echo $data_order['payment_date'];?></td><!-- 4 -->
-                        <td valign="top" bgcolor="#F5F5F5"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+						?>       
+                        </td>
+                        <!-- 3 -->
+                        <!-- 4 -->
+                        <?php                         
+                        $sql_order_product =  "SELECT tracking_number,trancking_date FROM  order_product_tb WHERE order_number = '".$data_order['order_number']."' ";
+                        $result_order_product =@mysql_query($sql_order_product, $connect);
+                        $data_order_product_t =@mysql_fetch_array($result_order_product);                                                
+                        ?>
+                        <td align="center" valign="top" bgcolor="#F5F5F5"><?php echo $data_order['ems_date'];?></td>
+                        <!-- 4 -->
+                        <!-- 5 -->
+                        <td align="center" valign="top" bgcolor="#F5F5F5"><?php echo $data_order_product_t['tracking_number'];?></td>
+                        <!-- 5 -->
+                        <!-- 6 -->
+                        <td align="center" valign="top" bgcolor="#F5F5F5"><?php echo $data_order['order_total'] + $data_order['order_transport_status'];?></td>
+                        <!-- 6 -->
+                        <!-- 7 -->
+                        <td valign="top" bgcolor="#F5F5F5"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr height="20">
-                            <td width="35%" bgcolor="#CCCCCC">รหัสสินค้า</td>
-                            <td width="15%" align="center" bgcolor="#CCCCCC">มีสินค้า</td>
-                            <td width="15%" align="center" bgcolor="#CCCCCC">สั่งสินค้า</td>
-                            <td width="20%"bgcolor="#CCCCCC">&nbsp;</td>
-                            <td  bgcolor="#CCCCCC">&nbsp;</td>
+                            <td width="60%" bgcolor="#CCCCCC">รหัสสินค้า</td>
+                            <td width="20%" align="center" bgcolor="#CCCCCC">มีสินค้า</td>
+                            <td width="20%" align="center" bgcolor="#CCCCCC">สั่งสินค้า</td>
+                            
+                            
                           </tr>
                           <?php 
 						  $num_readySend = 0;
@@ -647,46 +633,14 @@ $(document).ready(function() {
                             <td   align="center" bgcolor="#FFFFFF"><span style="color:#FF9900; font-weight:bold;" title="<?php echo $data_update3['pro_id'];?>"><?php echo $product_on_hand;?></span></td>
                             <td   align="center" bgcolor="#FFFFFF">
 											  <?php
-											  $sql_temp = "select sent_status,product_number,product_recive from temp_order_product where order_number = '".$data_order['order_number']."' ";
-                                                $sql_temp .= "and pid  = '".$data_update3['pro_id']."'";
-                                                $result_temp = @mysql_query($sql_temp, $connect);
-                                                $data_temp =@mysql_fetch_array($result_temp);
-
-                                                if($data_temp['sent_status'] == 'READY'){
-                                                    $show_status =  "<font color=#00CC00>พร้อมส่ง</font>";
-													$all_P = $all_P + 1;
-                                                }else{
-													$all_P = $all_P + 1;
-													$kard = $data_temp['product_number'] - $data_temp['product_recive'];
-													if($kard > 1 ){
-													$disa = 1;
-                                                    $show_status =  "<font color=#FF0000>รอของ ขาด ".$kard." ตัว</font>";
-													}else{
-													$disa = 1;
-                                                    $show_status =  "<font color=#FF0000>รอของ ".$kard." ตัว</font>";
-													}
-                                                }
+											  
 												echo " <b>".$order_p_stock."</b>";
                                             ?></td>
-                            <td   bgcolor="#FFFFFF"><?php echo $show_status; ?></td>
-                            <td  bgcolor="#FFFFFF">
-							<?php if($data_update3['ready_sent'] == '0'){
-								
-							$arr_id = explode(',',$_SESSION['AllID']);
-							$chk = '';
-							if(in_array($data_update3['order_p_id'], $arr_id)){
-								$chk = 'ok';
-							}
-							?>
-                              <input type="checkbox" name="tracking[<?php echo $data_update3['order_p_id'];?>]" value="1" <?php echo ($disa == '1' ? "disabled=disabled" : "" );?>  <?php echo ($chk == 'ok' ? "checked=checked" : "" );?>   />
-                            <?php }else{
-							$num_readySend = $num_readySend+1;
-							}
-							?>
-                            </td>
+                            
+                            
                           </tr>
                           <tr>
-                            <input type="hidden" name="trackingProId[<?php echo $data_update3['order_p_id'];?>]" value="<?php echo $data_update3['order_p_id'];?>"/>
+                            
                             <?php $disa=0 ; }  
 												
 												
@@ -709,24 +663,40 @@ $(document).ready(function() {
 							
 							 <?php
                              //echo $all_P." = ".$num_readySend;
-                             if(  $all_P == $num_readySend ){ ?>
-                             <input type="checkbox" class="checkbox1" name="chkDone[<?php echo $data_order['order_number'];?>]" value="<?php echo $data_order['order_number'];?>" /> 
-                             <font color=red><b>DONE</b></font>
+                             if(  $all_P == $num_readySend ){ ?>                             
                              <?php
                              //echo "<a href=?done=".$data_order['order_number']."><font color=red><b>DONE</b></font>&nbsp;&nbsp; "; 
 							 }
                              ?></td>
                           </tr>
-                        </table></td><!-- 5 -->
+                        </table></td>
+                        <!-- 7 -->
+                        <td  bgcolor="#FFFFFF" align="center">
+                        <?php 
+                        $sql_temp = "select payment_status from order_tb where order_number = '".$data_order['order_number']."' ";                                                
+                        $result_temp = @mysql_query($sql_temp, $connect);
+                        $data_temp =@mysql_fetch_array($result_temp);
+
+                        if($data_temp['payment_status'] == '6'){                                                   
+                            $show_status =  "<font color=red>ยังไม่ได้รับเงิน</font>";                                                    
+                            }else{
+                            $show_status =  "<font color=green>ได้รับเงินแล้ว</font>";                                                    
+                            }                                       
+                        
+                        echo $show_status; 
+                        ?></td>
+                        <!-- 8 -->
                         <td valign="top" bgcolor="#F5F5F5">
                             <a href="order_comment.php?n=<?php echo $data_order['order_number'];?>" target="_blank">  
                             <?php if($data_order['order_comment'] == '' ){?>  
                             <img src="images/1.png" width="14" height="14" />
                             <?php }else{ ?>
                             <img src="images/2.png" width="14" height="14" />
-                            <?php } ?>
+                            <?php } ?>                            
                             </a>
-                        </td><!-- 6 -->
+                            <input type="checkbox" class="checkbox1" name="chkDone[<?php echo $data_order['order_number'];?>]" value="<?php echo $data_order['order_number'];?>" />
+                        </td>
+                        <!-- 8 -->
                       </tr>
                       <?php   $val_order2 == '' ; } ?>
                     </table></td>

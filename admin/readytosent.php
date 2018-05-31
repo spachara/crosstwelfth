@@ -402,7 +402,7 @@ $(document).ready(function() {
                                                                         ELSE  ''
                                                                         END SEPARATOR  '' ) group_send, COUNT( order_number ) order_count
                                                                         FROM  order_tb";
-                                                                         $sql_order .= " where payment_status in( '1', '3') and tranfer_status in( '1', '3')";
+                                                                         $sql_order .= " where  tranfer_status in( '1', '3', '6')";
                                                                         $sql_order .= " and order_status <> '0' and status_ready = '0' ";
 									if($_POST['Search'] == 'Search'){
 										

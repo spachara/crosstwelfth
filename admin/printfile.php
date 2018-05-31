@@ -45,8 +45,7 @@ require_once '../dbconnect.inc';
 			if($a<=$col){        
 			?>
             <td valign="top" width="490" style="border-bottom:#333 1px solid; border-right:#333 1px solid;">
-            <div style="margin-left:10px; margin-top:10px; margin-bottom:10px;" >
-            
+            <div style="margin-left:10px; margin-top:10px; margin-bottom:10px;" >     
             
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" font-family: 'layiji_mahaniyom_v1.41regular'; font-size:16px;">
 			<tr><td width="60%">
@@ -64,11 +63,15 @@ require_once '../dbconnect.inc';
 					if($data_update5['order_type'] !=  $type){
 					$type = $data_update5['order_type'];
 					if( $i5 > 1) $order_to .= "<br>";
-					$order_to .= "Order number : ".$data_update5['order_number']."-".$data_update5['order_type']." ".$data_update5['order_transport'];
+					$order_to .= "&nbsp;&nbsp;Order number : ".$data_update5['order_number']."-".$data_update5['order_type'];					
 					}
+					
 				}
+				
 			
 			echo $order_to;
+			
+			
 
 			if($data_order['order_transport'] == 'ไปรษณีย์ส่งด่วน พิเศษ ( EMS )'){
 				echo " ( EMS )";
@@ -77,8 +80,14 @@ require_once '../dbconnect.inc';
 			
 			$exName = explode('เบอร์โทรศัพท์',$data_order['order_address2']);
 			
-			$exPhone = explode('อีเมล์',$exName[1]);
-			?><span style="font-size:20px; font-weight:bold">
+			$exPhone = explode('อีเมล์',$exName[1]);		
+			if($data_update5['order_transport'] == 'จัดส่งเก็บเงินปลายทาง'){
+			?>			
+			<div  style="font-size:35px; display:table; margin:0px; font-weight:bold; color:Red" > <?php echo "&nbsp;&nbsp;&nbsp;".$data_update5['order_transport']; }?></div>
+		
+			
+            </div>
+			<span style="font-size:20px; font-weight:bold">
             <?php
 			echo ereg_replace('รหัสไปรษณีย์ : ','',ereg_replace('ชื่อ : ','',ereg_replace('ที่อยู่ : ','',ereg_replace('จังหวัด : ','',$exName[0]))));
 			?>

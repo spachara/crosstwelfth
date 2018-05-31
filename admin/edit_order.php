@@ -14,15 +14,17 @@ if($_POST['UPDATE'] == 'UPDATE'){
 					if($_POST['tran'] != '0' ){
 						
 					if($_POST['tran'] == '2'){
-						$order_status = 1;
+						$order_status = 1;						
+					}elseif($_POST['tran'] == '3'){
+						$order_status = 2;						
 					}else{
-						$order_status = 2;
+						$order_status = 6;						
 					}
 					
 					$sql_update = "UPDATE order_tb SET order_status = '".$order_status."', tranfer_status = '".$_POST['tran']."', payment_status = '".$_POST['tran']."'";
-					$sql_update .= ", tranfer_value = '".$_POST['tran_val']."' where order_number = '".$_POST['order_number']."'";
+					$sql_update .= ", tranfer_value = '".$_POST['tran_val']."' where order_number = '".$_POST['order_number']."'";					
 					$result_update = @mysql_query($sql_update, $connect);
-					
+
 					
 
 						
@@ -630,7 +632,7 @@ function number_only()
                             <option value="1" <?php echo ($data_order['tranfer_status'] == '1' ? "selected=selected" : "" );?>>โอนพอดี</option>
                             <option value="2" <?php echo ($data_order['tranfer_status'] == '2' ? "selected=selected" : "" );?>>โอนขาด</option>
                             <option value="3" <?php echo ($data_order['tranfer_status'] == '3' ? "selected=selected" : "" );?>>โอนเกิน</option>
-							<option value="4" <?php echo ($data_order['tranfer_status'] == '4' ? "selected=selected" : "" );?>>ปลายทาง</option>
+							<option value="6" <?php echo ($data_order['tranfer_status'] == '6' ? "selected=selected" : "" );?>>รอชำระเงินปลายทาง</option>
                           </select>                        
                         
                         <input type="text" name="tran_val" value="<?php echo $data_order['tranfer_value'];?>" style="width:50px" />

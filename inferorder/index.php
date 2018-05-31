@@ -215,7 +215,7 @@ include('../include/header.php') ?>
 						<?php 
 						
 						                       
-                        $sql_insert_order = "select * from order_tb where order_status = '1' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc ";
+                        $sql_insert_order = "select * from order_tb where order_status = '1' AND order_transport <>  'จัดส่งเก็บเงินปลายทาง' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc ";
                         $result_insert_order = @mysql_query($sql_insert_order, $connect);
                         $num_order = @mysql_num_rows($result_insert_order);
 						
@@ -223,7 +223,7 @@ include('../include/header.php') ?>
 						   $data_order= @mysql_fetch_array($result_insert_order);
 						   
 
-								$sql_insert_order4 = "select * from order_tb where order_number = '".$data_order['order_number']."'";
+								$sql_insert_order4 = "select * from order_tb where order_number = '".$data_order['order_number']."'  ";
 								$result_insert_order4 = @mysql_query($sql_insert_order4, $connect);
 								$num_order4 = @mysql_num_rows($result_insert_order4);
 								$data_order4= @mysql_fetch_array($result_insert_order4);
@@ -318,7 +318,7 @@ include('../include/header.php') ?>
                                     <label>ใบสั่งซื้อ*</label>
                                     <section>
 									<?php                        
-                                    $sql_insert_order3 = "select * from order_tb where order_status = '1' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc";
+                                    $sql_insert_order3 = "select * from order_tb where order_status = '1' AND order_transport <>  'จัดส่งเก็บเงินปลายทาง' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc";
                                     $result_insert_order3 = @mysql_query($sql_insert_order3, $connect);
                                     $num_order3 = @mysql_num_rows($result_insert_order3);
 									?>
