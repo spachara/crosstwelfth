@@ -306,6 +306,7 @@ $(document).ready(function() {
 </head>
 
 <body> 
+
 	<div class="page_container">
     <div class="shadow_l"></div>
 	<div class="shadow_r"></div>  

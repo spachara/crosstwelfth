@@ -394,7 +394,7 @@ $(document).ready(function() {
                         <td width="54%" align="center" bgcolor="#CCCCCC"><input type="checkbox" id="selecctall"/> Selecct All</td>
                         <td width="2%" align="center" bgcolor="#CCCCCC">&nbsp;</td>
                       </tr>
-                      <?php 
+                      <?php  
                                                                         $sql_order =  "SELECT order_number, order_comment, payment_date, order_address2, GROUP_CONCAT( CONCAT( order_number,  '-', order_type,  ' ', order_transport ) 
                                                                         ORDER BY order_type ) order_concate, GROUP_CONCAT( 
                                                                         CASE WHEN order_type =  'PRE'

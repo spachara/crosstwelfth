@@ -269,8 +269,7 @@ include('../include/header.php') ?>
 										$total_order_show =  $total_order_show - $data_order4['order_point'];
 										}
 								}
-						   
-						   
+						   						   
                         ?>
                         <tr>
                             <!--<td align="center" valign="middle">

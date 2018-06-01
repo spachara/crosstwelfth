@@ -49,7 +49,7 @@ require_once '../dbconnect.inc';
             
             <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" font-family: 'layiji_mahaniyom_v1.41regular'; font-size:16px;">
 			<tr><td width="60%">
-			<?php 
+			<?php  
 			
 			$sql_update5 = "select * from order_product_tb INNER JOIN order_tb ON order_product_tb.order_number = order_tb.order_number  where order_product_tb.order_number = '".$key."' ";			
 			$sql_update5 .= "and order_product_tb.ready_time = '".$_GET['d']."' and order_product_tb.round_update = '".$_GET['r']."' and order_product_tb.ready_sent <> '0' order by order_product_tb.order_type";			

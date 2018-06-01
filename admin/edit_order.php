@@ -9,8 +9,7 @@ if(isset($_SESSION['AUTH_PERMISSION_ID'])==false) {
 
 
 
-if($_POST['UPDATE'] == 'UPDATE'){
-	
+if($_POST['UPDATE'] == 'UPDATE'){	
 					if($_POST['tran'] != '0' ){
 						
 					if($_POST['tran'] == '2'){

@@ -827,8 +827,7 @@ function processPopupLink(val){
 												}
 												?>s
                                         </td>
-                                        <td align="center" bgcolor="#F5F5F5">
-                                        			
+                                        <td align="center" bgcolor="#F5F5F5">                                        			
 											<?php 
                                                 if($data_order['tranfer_status']==1){
                                                     echo "<font color=#000000>โอนพอดี</font>";

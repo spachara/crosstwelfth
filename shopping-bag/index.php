@@ -753,8 +753,7 @@ $(document).ready(function() {
 											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/></td>
                         	<td width="48%" align="left" valign="middle"  >
                             	<div class="choice-tabel" >
-                                	<ul>
-									
+                                	<ul>									
                                     	<li>                                        	
 										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
