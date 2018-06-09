@@ -311,7 +311,7 @@ if($_POST['order_number']){
 						<section>
 							<?php
 							if($_SESSION['AUTH_PERMISSION_MEMID']){                        
-								$sql_insert_order3 = "select * from order_tb where order_status = '1' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc";
+								$sql_insert_order3 = "select * from order_tb where order_status = '1' order_transport <>  'จัดส่งเก็บเงินปลายทาง' and u_id = '".$_SESSION['AUTH_PERMISSION_MEMID']."' GROUP BY order_number order by date_in desc";
 								$result_insert_order3 = @mysql_query($sql_insert_order3, $connect);
 								$num_order3 = @mysql_num_rows($result_insert_order3);
 							?>

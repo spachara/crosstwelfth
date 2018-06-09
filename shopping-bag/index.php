@@ -709,22 +709,7 @@ $(document).ready(function() {
 			<?php
 			$grand_num = $total_num_ship + $total_num_pre_ship;
 
-			$select_ship3 = "SELECT * FROM shipping_tb WHERE shipping_ranking order by shipping_ranking ";
-			$result_ship3 =@mysql_query($select_ship3, $connect);
-			$data_ship3 =@mysql_fetch_array($result_ship3);
-
-			$ems_price = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $grand_num );
-			$normal_price =$data_ship3['shipping_cost'] + $data_ship3['shipping_p'] ;
-/*
-			$select_ship2 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '1' ";
-			$result_ship2 =@mysql_query($select_ship2, $connect);
-			$data_ship2 =@mysql_fetch_array($result_ship2);
-
-			$normal_price = $data_ship2['shipping_cost'];
-			*/
-			$in_stock_ems = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $total_num_ship );
-			$pre_ems = $data_ship3['shipping_cost'] + ($data_ship3['shipping_p'] * $total_num_pre_ship );
-
+			
 			
 			
 			if ($_SESSION['session_id']) {
@@ -741,7 +726,21 @@ $(document).ready(function() {
 									$num_ship =@mysql_num_rows($result_ship);
 									for($s=1;$s<=intval($num_ship);$s++)
 									{
-                                    $data_ship =@mysql_fetch_array($result_ship);	
+									$data_ship =@mysql_fetch_array($result_ship);
+									
+						
+									$ems_price = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $grand_num );
+									$normal_price =$data_ship['shipping_cost'] + $data_ship['shipping_p'] ;
+						/*
+									$select_ship2 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '1' ";
+									$result_ship2 =@mysql_query($select_ship2, $connect);
+									$data_ship2 =@mysql_fetch_array($result_ship2);
+						
+									$normal_price = $data_ship2['shipping_cost'];
+									*/
+									$in_stock_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_ship );
+									$pre_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_pre_ship );
+							
                                     ?>
 					</ul>
                         <tr class="twoTable">
@@ -809,7 +808,19 @@ $(document).ready(function() {
 									$result_ship =@mysql_query($select_ship, $connect);
 									$num_ship =@mysql_num_rows($result_ship);
 									for($s=1;$s<=intval($num_ship);$s++){
-                                    $data_ship =@mysql_fetch_array($result_ship);	
+									$data_ship =@mysql_fetch_array($result_ship);	
+									
+									$ems_price = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $grand_num );
+									$normal_price =$data_ship['shipping_cost'] + $data_ship['shipping_p'] ;
+						/*
+									$select_ship2 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '1' ";
+									$result_ship2 =@mysql_query($select_ship2, $connect);
+									$data_ship2 =@mysql_fetch_array($result_ship2);
+						
+									$normal_price = $data_ship2['shipping_cost'];
+									*/
+									$in_stock_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_ship );
+									$pre_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_pre_ship );
                                     ?>
 						<tr class="twoTable">
 						<td colspan="3" width="2%" align="left" valign="middle">                            	
