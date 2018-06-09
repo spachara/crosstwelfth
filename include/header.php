@@ -1,5 +1,8 @@
 ﻿<?php
-
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8BH2BP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 session_register('AUTH_PERMISSION_MEMID');
 session_register('sess_language');
