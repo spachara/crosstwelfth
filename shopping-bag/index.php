@@ -756,7 +756,7 @@ $(document).ready(function() {
                                     	<li>                                        	
 										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
-                                    <?php $_SESSION['session_shipping'] = $data_ship['shipping_ranking'] ?>    
+                                    <?php $_SESSION['session_shipping'] = $data_ship['shipping_id'] ?>    
                 						
                 			
                                     </ul>
@@ -832,7 +832,7 @@ $(document).ready(function() {
 											($total_num_pre_ship > 1 && $data_ship['shipping_id'] == 2)? "checked=checked" : '');*/?>
                                              <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>                                            
                                         </li>                                    
-										<?php $_SESSION['session_shipping'] = $data_ship['shipping_ranking'] ?>    
+										<?php $_SESSION['session_shipping'] = $data_ship['shipping_id'] ?>    
                                     </ul>                                
                             </td>
 							<td width="48%" align="left" valign="middle"  >
