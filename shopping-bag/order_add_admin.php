@@ -344,7 +344,7 @@ if(!empty($postedToken)){
 
 
 
-
+$grand_total = 0;
 if($_SESSION['session_id']){
 	
 $_SESSION['order_id']= $_SESSION['fix_time'];
@@ -425,6 +425,7 @@ if($_SESSION['session_pre_id']){
 $_SESSION['order_pre_id']= $_SESSION['fix_time'];
 
 	
+	$grandTotalPre = 0;
 if ($_SESSION['groupDelivery'] == '1') {
 	$pre_group = $_SESSION['order_id']."-IN";	
 }
@@ -511,4 +512,28 @@ $cost_ship = $_SESSION['session_realShipPre'];
 }
 }
 ?>
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '382803885229241'); // Insert your pixel ID here.
+fbq('track', 'PageView');
+// If you have a separate add to cart page that is loaded.
+fbq('track', 'Purchase', {
+  content_ids: ['<?php echo   implode("', '", array_merge($_SESSION['session_id'], $_SESSION['session_pre_id']));?>'], 
+  content_type: 'product',
+  value: <?php echo ($grandTotalPre + $grand_total  );?>,
+  currency: 'THB'
+});
+</script>
+
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=382803885229241&ev=PageView&noscript=1"
+/></noscript>
+<!-- DO NOT MODIFY -->
+<!-- End Facebook Pixel Code -->
 	<script>location='thankyou_admin.php'</script>
