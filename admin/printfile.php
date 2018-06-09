@@ -81,7 +81,7 @@ require_once '../dbconnect.inc';
 			$exName = explode('เบอร์โทรศัพท์',$data_order['order_address2']);
 			
 			$exPhone = explode('อีเมล์',$exName[1]);		
-			if($data_update5['order_transport'] == 'จัดส่งเก็บเงินปลายทาง'){
+			if($data_update5['order_shipping'] == '3'){
 			?>			
 			<div  style="font-size:35px; display:table; margin:0px; font-weight:bold; color:Red" > <?php echo "&nbsp;&nbsp;&nbsp;".$data_update5['order_transport']; }?></div>
 		

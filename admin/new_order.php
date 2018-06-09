@@ -317,6 +317,7 @@ function processPopupLink(val){
                                           <option value="5" <?php echo ($_POST['order_status'] == '5' ? "selected=selected" : "");?>>แจ้งโอนเงิน/รอเช็คยอดเงิน</option>
                                           <option value="2" <?php echo ($_POST['order_status'] == '2' ? "selected=selected" : "");?>>ได้รับชำระเงินแล้ว/รอจัดส่งสินค้า</option>
                                           <option value="3" <?php echo ($_POST['order_status'] == '3' ? "selected=selected" : "");?>>จัดส่งสินค้าเรียบร้อยแล้ว</option>
+                                          <option value="6" <?php echo ($_POST['order_status'] == '6' ? "selected=selected" : "" );?>>จัดส่งสินค้า/รอชำระเงินปลายทาง</option>
                                           <option value="0" <?php echo ($_POST['order_status'] == '0' ? "selected=selected" : "");?>>ยกเลิกใบสั่งซื้อ</option>
                                         </select></td>
 										 <td width="6%">เบอร์โทร</td>
@@ -825,7 +826,7 @@ function processPopupLink(val){
 													}
                                                     
 												}
-												?>s
+												?>
                                         </td>
                                         <td align="center" bgcolor="#F5F5F5">                                        			
 											<?php 

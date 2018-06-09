@@ -16,8 +16,6 @@ if($_POST['UPDATE'] == 'UPDATE'){
 						$order_status = 1;						
 					}elseif($_POST['tran'] == '3'){
 						$order_status = 2;						
-					}else{
-						$order_status = 6;						
 					}
 					
 					$sql_update = "UPDATE order_tb SET order_status = '".$order_status."', tranfer_status = '".$_POST['tran']."', payment_status = '".$_POST['tran']."'";
@@ -630,8 +628,7 @@ function number_only()
                             <option value="0" <?php echo ($data_order['tranfer_status'] == '0' ? "selected=selected" : "" );?> ></option>
                             <option value="1" <?php echo ($data_order['tranfer_status'] == '1' ? "selected=selected" : "" );?>>โอนพอดี</option>
                             <option value="2" <?php echo ($data_order['tranfer_status'] == '2' ? "selected=selected" : "" );?>>โอนขาด</option>
-                            <option value="3" <?php echo ($data_order['tranfer_status'] == '3' ? "selected=selected" : "" );?>>โอนเกิน</option>
-							<option value="6" <?php echo ($data_order['tranfer_status'] == '6' ? "selected=selected" : "" );?>>รอชำระเงินปลายทาง</option>
+                            <option value="3" <?php echo ($data_order['tranfer_status'] == '3' ? "selected=selected" : "" );?>>โอนเกิน</option>							
                           </select>                        
                         
                         <input type="text" name="tran_val" value="<?php echo $data_order['tranfer_value'];?>" style="width:50px" />

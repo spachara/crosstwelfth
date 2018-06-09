@@ -234,7 +234,7 @@ if($_POST['order_number']){
 					'transitionOut'		: 'none',
 					'transitionIn'	: 'fade',
 					'transitionOut'	: 'fade',				
-					'type'				: 'iframe',
+					'type'				: 'iframe', 
 					'onClosed': function() {   
 					 parent.location.href='index.php';
 					}

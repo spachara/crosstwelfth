@@ -466,14 +466,18 @@ if($_SESSION['session_id']){
 	
 			$insert_order = "INSERT INTO order_tb (order_id, u_id, order_number, order_number_rank, order_type, order_address1, order_address2";
 			$insert_order .= ", order_total, order_promotion, order_point, order_transport, order_transport_status, order_province, order_country ";			
-			$insert_order .= " , order_type_pay, order_employee, order_email, order_phone, order_group, date_in, date_update)";
+			$insert_order .= " , order_type_pay, order_employee, order_email, order_phone, order_group, date_in, date_update,order_shipping)";
 			$insert_order .= "VALUES('', '".$_SESSION['AUTH_PERMISSION_MEMID']."', '".$_SESSION['order_id']."', '', 'IN'";
 			$insert_order .= ", '".$address1."', '".$address2."', '".$grand_total."', '".$_SESSION['session_PromotionDis']."'";
 			$insert_order .= ", '".$_SESSION['session_PointDis']."', '".mysql_real_escape_string($_SESSION['session_shipping_name_th'])."' ";
 			$insert_order .= " , '".mysql_real_escape_string($_SESSION['session_realShip'])."', '".mysql_real_escape_string($_SESSION['cus_province'])."', '".$_SESSION['cus_country']."'";
 			$insert_order .= ", '".$_SESSION['sess_paid']."', '".mysql_real_escape_string($_SESSION['cus_name'])." ".mysql_real_escape_string($_SESSION['cus_lname'])."' ";
-			$insert_order .= " , '".mysql_real_escape_string($_SESSION['cus_email'])."', '".mysql_real_escape_string($_SESSION['cus_phone'])."', '".$pro_group."', NOW(), NOW() )"; 
+			$insert_order .= " , '".mysql_real_escape_string($_SESSION['cus_email'])."', '".mysql_real_escape_string($_SESSION['cus_phone'])."', '".$pro_group."', NOW(), NOW(), '".mysql_real_escape_string($_SESSION['session_shipping'])."' )"; 
 			@mysql_query($insert_order, $connect);
+			if(mysql_real_escape_string($_SESSION['session_shipping']) == '3'){
+				$update_order = "UPDATE order_tb set order_status = '6' ,tranfer_status = '6' ,payment_status = '6' Where order_shipping = '3' ";
+				@mysql_query($update_order, $connect);
+				}
 			
 			//echo "<br><br><br>".$insert_order;
 }
@@ -555,13 +559,18 @@ $cost_ship = $_SESSION['session_realShipPre'];
 	
 			$insert_order2 = "INSERT INTO order_tb (order_id, u_id, order_number, order_number_rank, order_type, order_address1, order_address2";
 			$insert_order2 .= ", order_total, order_promotion, order_point, order_transport, order_transport_status, order_province, order_country ";			
-			$insert_order2 .= " , order_type_pay, order_employee, order_email, order_phone, order_group, date_in, date_update)";
+			$insert_order2 .= " , order_type_pay, order_employee, order_email, order_phone, order_group, date_in, date_update,order_shipping)";
 			$insert_order2 .= "VALUES('', '".$_SESSION['AUTH_PERMISSION_MEMID']."', '".$_SESSION['order_pre_id']."', '', 'PRE'";
 			$insert_order2 .= ", '".$address1."', '".$address2."', '".$grandTotalPre."', '".$_SESSION['session_PromotionDis']."'";
 			$insert_order2 .= ", '".$_SESSION['session_PointDis']."', '".$pre_shipping."' ";
 			$insert_order2 .= " , '".$cost_ship."', '".mysql_real_escape_string($_SESSION['cus_province'])."', '".$_SESSION['cus_country']."', '".$_SESSION['sess_paid']."', '".mysql_real_escape_string($_SESSION['cus_name2'])." ".mysql_real_escape_string($_SESSION['cus_lname2'])."' ";
-			$insert_order2 .= " , '".mysql_real_escape_string($_SESSION['cus_email'])."', '".mysql_real_escape_string($_SESSION['cus_phone'])."', '".$pre_group."', NOW(), NOW() )"; 
+			$insert_order2 .= " , '".mysql_real_escape_string($_SESSION['cus_email'])."', '".mysql_real_escape_string($_SESSION['cus_phone'])."', '".$pre_group."', NOW(), NOW(), '".mysql_real_escape_string($_SESSION['session_shipping'])."' )"; 
 			@mysql_query($insert_order2, $connect);
+			
+			if(mysql_real_escape_string($_SESSION['session_shipping']) == '3'){
+				$update_order = "UPDATE order_tb set order_status = '6' ,tranfer_status = '6' ,payment_status = '6' Where order_shipping = '3' ";
+				@mysql_query($update_order, $connect);
+				}
 			
 			//echo "<br><br><br>".$insert_order;
 }

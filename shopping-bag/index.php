@@ -46,7 +46,7 @@ if ($_POST['pro_id'] != '' ) {
 	session_unregister("session_TotalNumGrand");
 	session_unregister("session_tranCostPreChk");
 	session_unregister("session_SubmitGrandTotal");
-	session_unregister("session_tranCostPlusCal");
+	session_unregister("session_tranCostPlusCal");	
 	session_unregister("session_realShip");
 	session_unregister("session_realShipPre");
 	session_unregister("session_PointDis");
@@ -740,7 +740,7 @@ $(document).ready(function() {
 									*/
 									$in_stock_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_ship );
 									$pre_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_pre_ship );
-							
+									
                                     ?>
 					</ul>
                         <tr class="twoTable">
@@ -756,7 +756,7 @@ $(document).ready(function() {
                                     	<li>                                        	
 										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
                                         </li>
-                                    <?php ?>    
+                                    <?php $_SESSION['session_shipping'] = $data_ship['shipping_ranking'] ?>    
                 						
                 			
                                     </ul>
@@ -769,7 +769,7 @@ $(document).ready(function() {
 								
 								<?php 
 								
-                                if($_SESSION['session_realShip']){
+                                if($_SESSION['session_realShip']){ 
 									echo $old_tran = $_SESSION['session_realShip'];
 								}else{
 									if($_SESSION['shipping'] == '' && $total_num_ship == '1'){
@@ -809,7 +809,7 @@ $(document).ready(function() {
 									$num_ship =@mysql_num_rows($result_ship);
 									for($s=1;$s<=intval($num_ship);$s++){
 									$data_ship =@mysql_fetch_array($result_ship);	
-									
+
 									$ems_price = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $grand_num );
 									$normal_price =$data_ship['shipping_cost'] + $data_ship['shipping_p'] ;
 						/*
@@ -821,6 +821,7 @@ $(document).ready(function() {
 									*/
 									$in_stock_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_ship );
 									$pre_ems = $data_ship['shipping_cost'] + ($data_ship['shipping_p'] * $total_num_pre_ship );
+									
                                     ?>
 						<tr class="twoTable">
 						<td colspan="3" width="2%" align="left" valign="middle">                            	
@@ -831,7 +832,7 @@ $(document).ready(function() {
 											($total_num_pre_ship > 1 && $data_ship['shipping_id'] == 2)? "checked=checked" : '');*/?>
                                              <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>                                            
                                         </li>                                    
-
+										<?php $_SESSION['session_shipping'] = $data_ship['shipping_ranking'] ?>    
                                     </ul>                                
                             </td>
 							<td width="48%" align="left" valign="middle"  >
