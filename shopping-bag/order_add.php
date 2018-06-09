@@ -586,9 +586,9 @@ fbq('init', '382803885229241'); // Insert your pixel ID here.
 fbq('track', 'PageView');
 // If you have a separate add to cart page that is loaded.
 fbq('track', 'Purchase', {
-  content_ids: [<?php echo implode(", ", array_merge( $_SESSION['session_id'] , $_SESSION['session_pre_id'] )  );?>], 
+  content_ids: ['<?php echo   implode("', '", array_merge($_SESSION['session_id'], $_SESSION['session_pre_id']));?>'], 
   content_type: 'product',
-  value: <?php echo $grandTotalPre + $grand_total  );?>,
+  value: <?php echo ($grandTotalPre + $grand_total  );?>,
   currency: 'THB'
 });
 </script>

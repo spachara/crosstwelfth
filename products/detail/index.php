@@ -69,9 +69,9 @@ fbq('init', '382803885229241'); // Insert your pixel ID here.
 fbq('track', 'PageView');
 
 fbq('track', 'ViewContent', {
-  content_ids: [<?php echo $_GET['id']  );?>],
+  content_ids: ['<?php echo ($_GET['id']  );?>'],
   content_type: 'product',
-  value: <?php echo $data_product['p_price'] );?>,
+  value: <?php echo ($data_product['p_price'] );?>,
   currency: 'THB
 });
 </script>
