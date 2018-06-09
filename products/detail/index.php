@@ -12,7 +12,13 @@ $data_product = @mysql_fetch_array($result_product);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K8BH2BP');</script>
+<!-- End Google Tag Manager -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Cross Twelfth</title>
 <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
@@ -50,6 +56,31 @@ $(document).ready(function() {
 }
 
 </script>
+
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '382803885229241'); // Insert your pixel ID here.
+fbq('track', 'PageView');
+
+fbq('track', 'ViewContent', {
+  content_ids: ['<?php echo ($_GET['id']  );?>'],
+  content_type: 'product',
+  value: <?php echo ($data_product['p_price'] );?>,
+  currency: 'THB
+});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=382803885229241&ev=PageView&noscript=1"
+/></noscript>
+<!-- DO NOT MODIFY -->
+<!-- End Facebook Pixel Code -->
+ 
 </head>
 
 <body>

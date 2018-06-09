@@ -37,7 +37,13 @@ if($_SESSION['sess_paid']  == '' ){
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+<head><!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K8BH2BP');</script>
+<!-- End Google Tag Manager -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Cross Twelfth</title>
 <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">

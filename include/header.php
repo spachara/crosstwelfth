@@ -1,6 +1,4 @@
 ﻿<?php
-
-
 session_register('AUTH_PERMISSION_MEMID');
 session_register('sess_language');
 session_register('LOGIN_FB_ID');
@@ -75,6 +73,11 @@ if (strcmp($script_tz, ini_get('date.timezone'))){
     echo 'Script timezone and ini-set timezone match.';
 }*/
 ?>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8BH2BP"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <header>
 	<section class="container_content paragraph">
     	
