@@ -57,7 +57,6 @@ if ($_POST['pro_id'] != '' ) {
 
 
 	$id_arr = $_POST['pro_id'];
-	$price = $_POST['pro_id'];
 	
 	$select_product_stock = "SELECT * FROM product_tb WHERE pid = '".$_POST['pro_id']."' and p_stock = '0'";
 	$result_product_stock =@mysql_query($select_product_stock, $connect);
@@ -85,9 +84,7 @@ if ($_POST['pro_id'] != '' ) {
 						}else{
 						$_SESSION['session_pre_price'][$id_arr] = round($data_product['p_price']);//เก็บราคา
 						}
-						
-						$price = $_SESSION['session_pre_price'][$id_arr];
-					
+						 
 						
 						$_SESSION['session_pre_type_th'][$id_arr] = $data_product['p_category']; 
 						$_SESSION['session_pre_type_eng'][$id_arr] = $data_product['p_category']; 
@@ -127,9 +124,7 @@ if ($_POST['pro_id'] != '' ) {
 						}else{
 						$_SESSION['session_price'][$id_arr] = round($data_product['p_price']);//เก็บราคา
 						}
-						
-							$price = $_SESSION['session_price'][$id_arr];
-					
+						 
 						
 						$_SESSION['session_type_th'][$id_arr] = $data_product['p_category']; 
 						$_SESSION['session_type_eng'][$id_arr] = $data_product['p_category']; 
