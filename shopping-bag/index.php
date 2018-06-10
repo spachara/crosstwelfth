@@ -744,25 +744,22 @@ $(document).ready(function() {
                                     ?>
 					</ul>
                         <tr class="twoTable">
-						<td colspan="3" width="2%" align="left" valign="middle">
-						<input onclick="chk_order()" name="shipping_type" type="radio"  
+						<td  style="padding-left:20px" width="50%" align="left" valign="middle" >
+						<div class="choice-tabel">
+						<input onclick="chk_order()" name="shipping_type" type="radio" checked="checked"   
 											<?php //echo ($total_num_ship > 1 && $data_ship['shipping_id'] == '1' ? "disabled=disabled" : "" );?> 
-                                            value="<?php echo $data_ship['shipping_id'];?>" 
+                                            value="<?php echo $data_ship['shipping_id'];?>" 											
 											<?php /*echo ($_SESSION['shipping_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_id'] == '' && $s =='1') || 
-											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/></td>
-                        	<td width="48%" align="left" valign="middle"  >
-                            	<div class="choice-tabel" >
-                                	<ul>									
-                                    	<li>                                        	
-										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
-                                        </li>
+											($total_num_ship > 1 && $data_ship['shipping_id'] == 2) ? "checked=checked" : '');*/?>/>
+											                              	                                        	
+										<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
+                                       
                                     <?php $_SESSION['session_shipping'] = $data_ship['shipping_id'] ?>    
                 						
                 			
-                                    </ul>
-                                </div>
-                            </td>
-							
+									</div>
+                                </td>                        	
+								
                             <td width="52%" align="center" valign="middle">
                             	<strong>
                                 <div id="shipCost"> 
@@ -824,29 +821,21 @@ $(document).ready(function() {
 									
                                     ?>
 						<tr class="twoTable">
-						<td colspan="3" width="2%" align="left" valign="middle">                            	
+						<td  style="padding-left:20px" width="50%" align="left" valign="middle" > 
+						<div class="choice-tabel" >
                                 	<ul>									
                                     	<li>
                                         	<input onclick="chk_order2()"  name="shipping_type_pre" type="radio" checked="checked" <?php //echo ($total_num_pre_ship > 1 && $data_ship['shipping_id'] == '1' ? "disabled=disabled" : "" );?> id="<?php echo $s;?>" value="<?php echo $data_ship['shipping_id'];?>" 
 											<?php /*echo ($_SESSION['shipping_pre_id']==$data_ship['shipping_id'] || ($_SESSION['shipping_pre_id'] == '' && $s =='1')  || 
 											($total_num_pre_ship > 1 && $data_ship['shipping_id'] == 2)? "checked=checked" : '');*/?>
-                                             <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>                                            
-                                        </li>                                    
-										<?php $_SESSION['session_shipping'] = $data_ship['shipping_id'] ?>    
-                                    </ul>                                
-                            </td>
-							<td width="48%" align="left" valign="middle"  >
-                            	<div class="choice-tabel" >
-                                	<ul>									
-                                    	<li>                                        	
-										&nbsp;&nbsp;<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?>
-                                        </li>
-                                    <?php ?>    
-                						
-                			
-                                    </ul>
-                                </div>
-                            </td>
+                                             <?php echo ($_SESSION['groupDelivery'] == '1' ? "disabled=disabled" : "");?>/>
+										<?php $_SESSION['session_shipping'] = $data_ship['shipping_id'] ?> 
+										<?php echo  ($_SESSION['sess_language'] == 'eng' ? $data_ship['shipping_name'] : $data_ship['shipping_name_th']);?> 
+										</li>                                     
+                                    </ul> 
+								 </div>
+                            </td>                                
+                            
 							<?php
 							if($_SESSION['shipping_pre'] == '' ){ 
                             $select_ship2 = "SELECT * FROM shipping_tb WHERE shipping_ranking = '1' ";
