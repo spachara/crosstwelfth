@@ -182,7 +182,7 @@ $(document).ready(function() {
 											for($i=1;$i<=intval($num_product);$i++){
 											$data_product =@mysql_fetch_array($result_product);
 											
-												$sql_product_h = "SELECT * FROM product_highlight_tb2 WHERE highlight_status_show = 1 and p_code = '".$data_product['p_code']."' and p_color = '".$data_product['p_color']."'  ";
+												$sql_product_h = "SELECT * FROM product_highlight_tb2 WHERE p_code = '".$data_product['p_code']."' and p_color = '".$data_product['p_color']."'  ";
 												$result_product_h =@mysql_query($sql_product_h, $connect);
 												$num_product_h =@mysql_num_rows($result_product_h);
 												if ($num_product_h == 0) {													

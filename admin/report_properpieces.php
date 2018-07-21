@@ -163,7 +163,7 @@ $(function(){
 			if($_POST['submit'] == 'Submit' ){
 				
 			$sql_max = "select  op.pro_id, op.pro_code, op.order_p_size, op.order_p_color, sum(op.order_p_stock) as stock from order_product_tb as op ";
-			$sql_max .= ", order_tb as ot where op.order_number = ot.order_number and ot.order_status = '3' ";
+			$sql_max .= ", order_tb as ot where op.order_number = ot.order_number and ot.order_status = '2' ";
 			$sql_max .= " and ot.date_in between   '".$_POST['date_begin'] ."%'  AND '".$_POST['date_finish'] ."%' ";
 			$sql_max .= " GROUP BY op.pro_code, op.order_p_size, op.order_p_color ORDER BY `stock` desc";
 			$result_max = @mysql_query($sql_max, $connect);

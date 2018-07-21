@@ -14,9 +14,8 @@ if($_GET['page'] > 1){
 /*========================================= NEW ARRIVAL =========================================*/
 $number_product_highlight = 1;
 $number_product = 1;
-
-
-$select_product_scand = "SELECT * FROM product_tb p, product_highlight_tb2 ph WHERE p.p_code = ph.p_code and p.p_color = ph.p_color ";
+ 
+$select_product_scand = "SELECT * FROM product_tb p, product_highlight_tb2 ph WHERE p.p_code = ph.p_code and p.p_color = ph.p_color and ph.highlight_status = '1' and   p.ranking not in ('','0') and ph.ranking not in ('','0')";
 $select_product_scand .= " GROUP BY p.p_color, p.p_code ORDER BY ph.ranking desc";
 $result_product_scand = $obj->_query($select_product_scand, $connect);
 
